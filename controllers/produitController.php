@@ -1,0 +1,3 @@
+<?php
+
+$pages=["ajoutProduit","listeProduits"];
