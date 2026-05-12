@@ -3,6 +3,7 @@ require_once(ROOT . "models/produitModel.php");
 
 $pages = ["ajoutProduit", "listeProduit", "modifierProduit", "supprimerProduit"];
 
+
 function ajoutProduit(){
     $errors = [];
     $save   = [];
@@ -26,6 +27,16 @@ function ajoutProduit(){
 
     require_once(ROOT . "views/produits/ajoutProduit.php");
 }
+
+
+function supprimerProduit(){
+    $id = $_GET['id'] ?? null;
+    deleteProduit($id);
+    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+    exit;
+}
+
+
 
 function listeProduit(){
     $produits = getAllProduits();
@@ -56,11 +67,4 @@ function modifierProduit(){
 
     $produit = getProduitById($id);
     require_once(ROOT . "views/produits/ajoutProduit.php");
-}
-
-function supprimerProduit(){
-    $id = $_REQUEST["id"];
-    deleteProduit($id);
-    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
-    exit();
 }
