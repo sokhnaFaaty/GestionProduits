@@ -2,7 +2,7 @@
 
 require_once(ROOT . "models/produitModel.php");
 
-$pages = ["ajoutProduit", "enregistrerProduit"];
+$pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourProduit", "listeProduit", "supprimerProduit"];
 
 function ajoutProduit(){
     $errors  = [];
@@ -31,7 +31,13 @@ function mettreAJourProduit(){
 }
 
 
-$pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourProduit", "listeProduit"];
+function supprimerProduit(){
+    $id = $_GET['id'] ?? null;
+    deleteProduit($id);
+    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+    exit;
+}
+
 
 function listeProduit(){
     $produits = getAllProduits();

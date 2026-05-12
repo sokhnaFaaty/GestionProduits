@@ -1,7 +1,6 @@
 <?php
 require_once (ROOT ."db/config.php");
 
-
 function addProduit($libelle,$prix,$quantite){
     $db=getDB();
     $stmt=$db->prepare(
@@ -13,6 +12,12 @@ function addProduit($libelle,$prix,$quantite){
         ":prix"=>$prix,
         ":quantite"=>$quantite
     ]);
+}
+
+function deleteProduit($id){
+    $db   = getDB();
+    $stmt = $db->prepare("DELETE FROM produit WHERE id = :id");
+    $stmt->execute(["id" => $id]);
 }
 function getProduitById($id){
     $db   = getDB();
@@ -40,5 +45,4 @@ function updateProduit($id, $libelle, $prix, $quantite){
         "prix"     => $prix,
         "quantite" => $quantite
     ]);
-
 }
