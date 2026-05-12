@@ -45,13 +45,5 @@ function updateProduit($id, $libelle, $prix, $quantite){
         "prix"     => $prix,
         "quantite" => $quantite
     ]);
-<<<<<<< HEAD
 
-}
-function deleteProduit($id){
-    $db   = getDb();
-    $stmt = $db->prepare("DELETE FROM produit WHERE id = :id");
-    $stmt->execute(["id" => $id]);
-=======
->>>>>>> 6d644e0c963d74b6d03debedda32e0f92189b6de
 }
