@@ -1,7 +1,10 @@
 <?php
-function modifierProduit(){
-    $id      = $_GET['id'] ?? null;
-    $produit = getProduitById($id);
+
+require_once(ROOT . "models/produitModel.php");
+
+$pages = ["ajoutProduit", "enregistrerProduit"];
+
+function ajoutProduit(){
     $errors  = [];
     require_once(ROOT . "views/ajoutProduit.php"); // même vue
 }
@@ -25,4 +28,12 @@ function mettreAJourProduit(){
 
     $produit = getProduitById($id);
     require_once(ROOT . "views/ajoutProduit.php"); 
+}
+
+
+$pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourProduit", "listeProduit"];
+
+function listeProduit(){
+    $produits = getAllProduits();
+    require_once(ROOT . "views/listeProduit.php");
 }

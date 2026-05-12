@@ -1,3 +1,4 @@
+
 <?php
 require_once(ROOT."db/config.php");
 
@@ -13,3 +14,4 @@ function getAllClients() {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
