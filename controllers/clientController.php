@@ -42,3 +42,8 @@ function ajoutClient(){
 }
 require_once(ROOT."views/clients/ajoutClient.php");
 }
+
+function listeClient(){
+    $clients = getAllClients();
+    require_once(ROOT."views/clients/listeClient.php");
+}
