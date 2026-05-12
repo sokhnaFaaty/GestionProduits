@@ -8,11 +8,12 @@ function getDb(){
     try {
         $db = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8", $user, $password);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "connexion réussi";
+        // echo "connexion réussi";
+        return $db;
     } catch (PDOException $e) {
         die("Erreur de connexion : " . $e->getMessage());
     }
-    return $db;
+    
 }
 
 ?>
