@@ -18,7 +18,7 @@ function gestionControllerPage(){
     require_once($routes[$controller]);
     
 
-    $page = $_REQUEST["page"] ?? "ajoutClient";
+    $page = $_REQUEST["page"] ?? $pages[0];
     if(!in_array($page,$pages)){
         echo "page introuvable";
     }else {
@@ -27,3 +27,6 @@ function gestionControllerPage(){
     }
 }
 gestionControllerPage();
+
+
+

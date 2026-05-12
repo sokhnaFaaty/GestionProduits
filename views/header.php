@@ -20,6 +20,6 @@
     </div>
     <div class="flex gap-1 text-sm">
       <a href="<?= WEBROOT?>?controller=clients&page=listeClient" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium">👤 Clients</a>
-      <a href="liste_produits.html" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Produits</a>
+      <a href="<?= WEBROOT?>?controller=produits&page=listeProduit" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Produits</a>
     </div>
   </nav>
