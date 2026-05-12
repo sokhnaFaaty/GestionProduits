@@ -14,15 +14,15 @@ function addProduit($libelle,$prix,$quantite){
     ]);
 }
 
-function deleteProduit($id){
+function deleteProduit($id_produit){
     $db   = getDb();
-    $stmt = $db->prepare("DELETE FROM produit WHERE id = :id");
-    $stmt->execute(["id" => $id]);
+    $stmt = $db->prepare("DELETE FROM produit WHERE id_produit = :id_produit");
+    $stmt->execute(["id_produit" => $id_produit]);
 }
-function getProduitById($id){
+function getProduitById($id_produit){
     $db   = getDb();
-    $stmt = $db->prepare("SELECT * FROM produit WHERE id = :id");
-    $stmt->execute(["id" => $id]);
+    $stmt = $db->prepare("SELECT * FROM produit WHERE id_produit= :id_produit");
+    $stmt->execute(["id_produit" => $id_produit]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
@@ -32,15 +32,15 @@ function getAllProduits(){
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-function updateProduit($id, $libelle, $prix, $quantite){
+function updateProduit($id_produit, $libelle, $prix, $quantite){
     $db   = getDb();
     $stmt = $db->prepare(
         "UPDATE produit 
          SET libelle = :libelle, prix = :prix, quantite_stock = :quantite
-         WHERE id = :id"
+         WHERE id_produit = :id_produit"
     );
     $stmt->execute([
-        "id"       => $id,
+        "id_produit"=> $id_produit,
         "libelle"  => $libelle,
         "prix"     => $prix,
         "quantite" => $quantite
