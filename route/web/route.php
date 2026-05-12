@@ -7,7 +7,6 @@ function router(){
         "produits"=>ROOT."controllers/produitController.php",
     ];
 }
-
 function gestionControllerPage(){
     $routes = router();
     $controller = $_REQUEST["controller"] ?? array_key_first($routes);

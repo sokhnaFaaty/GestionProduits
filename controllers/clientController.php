@@ -37,8 +37,15 @@ function ajoutClient(){
                 "telephone" => $telephone 
             ];
         saveClient($nbClient);
+        header("location:".WEBROOT."?controller=clients&page=listeClient");
+        exit();
         }
         
 }
-require_once(ROOT."views/clients/ajoutClient.php");
+require_once(ROOT."views/clients/ajoutClient.php");   
+}
+
+function listeClient(){
+    $clients = getAllClients();
+    require_once(ROOT."views/clients/listeClient.php");
 }

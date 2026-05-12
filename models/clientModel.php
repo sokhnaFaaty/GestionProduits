@@ -6,3 +6,10 @@ function saveClient(array $data){
     $stmt = $db->prepare("INSERT INTO client (nom, prenom,telephone,email) VALUES (?, ?, ?, ?)");
     $stmt->execute([$data["nom"],$data["prenom"],$data["telephone"],$data["email"]]);
 }
+
+function getAllClients() {
+    $db = getDb();
+    $stmt = $db->prepare("SELECT * FROM client");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
