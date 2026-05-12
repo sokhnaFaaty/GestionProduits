@@ -6,31 +6,29 @@ $pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourP
 
 function ajoutProduit(){
     $errors  = [];
-    $success = false;
-    require_once(ROOT . "views/ajoutProduit.php");
+    require_once(ROOT . "views/ajoutProduit.php"); // même vue
 }
 
-function enregistrerProduit(){
-    $errors  = [];
-    $success = false;
-
+function mettreAJourProduit(){
+    $id       = $_POST['id'];
     $libelle  = trim($_POST['libelle']  ?? '');
     $prix     = $_POST['prix']          ?? '';
     $quantite = $_POST['quantite']      ?? '';
+    $errors   = [];
 
     if($libelle  === '') $errors[] = "Le libellé est obligatoire.";
     if($prix     === '') $errors[] = "Le prix est obligatoire.";
     if($quantite === '') $errors[] = "La quantité est obligatoire.";
 
     if(empty($errors)){
-        addProduit($libelle, (float)$prix, (int)$quantite);
-        $success = true;
-        $libelle = $prix = $quantite = '';
+        updateProduit($id, $libelle, (float)$prix, (int)$quantite);
+        header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+        exit;
     }
 
-    require_once(ROOT . "views/ajoutProduit.php");
+    $produit = getProduitById($id);
+    require_once(ROOT . "views/ajoutProduit.php"); 
 }
-
 
 
 function supprimerProduit(){
@@ -38,4 +36,10 @@ function supprimerProduit(){
     deleteProduit($id);
     header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
     exit;
+}
+
+
+function listeProduit(){
+    $produits = getAllProduits();
+    require_once(ROOT . "views/listeProduit.php");
 }
