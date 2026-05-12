@@ -1,4 +1,3 @@
-<?php require_once(ROOT . "views/header.php"); ?>
 
 <div class="max-w-2xl mx-auto px-6 py-10">
 
@@ -89,4 +88,3 @@
   </form>
 </div>
 
-<?php require_once(ROOT . "views/footer.php"); ?>

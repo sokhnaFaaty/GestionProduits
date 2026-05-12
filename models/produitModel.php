@@ -15,7 +15,7 @@ function addProduit($libelle,$prix,$quantite){
 }
 
 function deleteProduit($id){
-    $db   = getDB();
+    $db   = getDb();
     $stmt = $db->prepare("DELETE FROM produit WHERE id = :id");
     $stmt->execute(["id" => $id]);
 }
@@ -28,7 +28,7 @@ function getProduitById($id){
 
 function getAllProduits(){
     $db   = getDb();
-    $stmt = $db->query("SELECT * FROM produit ORDER BY id ASC");
+    $stmt = $db->query("SELECT * FROM produit ORDER BY id_produit ASC");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

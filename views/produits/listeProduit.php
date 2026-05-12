@@ -41,18 +41,18 @@
           else             $badge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">En stock</span>';
         ?>
         <tr class="hover:bg-gray-50 transition-colors" data-libelle="<?= strtolower(htmlspecialchars($p['libelle'])) ?>">
-          <td class="px-4 py-3 text-gray-400 font-mono text-xs">#<?= $p['id'] ?></td>
+          <td class="px-4 py-3 text-gray-400 font-mono text-xs">#<?= $p['id_produit'] ?></td>
           <td class="px-4 py-3 font-medium text-gray-900"><?= htmlspecialchars($p['libelle']) ?></td>
           <td class="px-4 py-3 text-gray-700 font-medium"><?= number_format($p['prix'], 0, ',', ' ') ?> FCFA</td>
           <td class="px-4 py-3 text-gray-600"><?= $q ?></td>
           <td class="px-4 py-3"><?= $badge ?></td>
           <td class="px-4 py-3">
             <div class="flex gap-2">
-              <a href="<?= WEBROOT ?>?controller=produits&page=modifierProduit&id=<?= $p['id'] ?>"
+              <a href="<?= WEBROOT ?>?controller=produits&page=modifierProduit&id=<?= $p['id_produit'] ?>"
                 class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition">
                 ✏️ Modifier
               </a>
-              <button onclick="openDel(<?= $p['id'] ?>, '<?= addslashes(htmlspecialchars($p['libelle'])) ?>')"
+              <button onclick="openDel(<?= $p['id_produit'] ?>, '<?= addslashes(htmlspecialchars($p['libelle'])) ?>')"
                 class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition">
                 🗑️ Supprimer
               </button>
