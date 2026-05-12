@@ -1,6 +1,4 @@
 <?php
-
-
 function getDB() {
     $host = '127.0.0.1';
     $dbname = 'gestionproduits';
