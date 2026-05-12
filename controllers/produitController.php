@@ -1,17 +1,10 @@
 <?php
-<<<<<<< HEAD
 
 require_once(ROOT . "models/produitModel.php");
 
-// Pages disponibles dans ce controller
 $pages = ["ajoutProduit", "enregistrerProduit"];
 
 function ajoutProduit(){
-=======
-function modifierProduit(){
-    $id      = $_GET['id'] ?? null;
-    $produit = getProduitById($id);
->>>>>>> 173f4262a8bbb3dc2282442af1d1cf38c9cedc7f
     $errors  = [];
     require_once(ROOT . "views/ajoutProduit.php"); // même vue
 }
