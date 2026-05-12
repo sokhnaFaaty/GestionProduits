@@ -14,3 +14,8 @@ function addProduit($libelle,$prix,$quantite){
         ":quantite"=>$quantite
     ]);
 }
+function deleteProduit($id){
+    $db   = getDB();
+    $stmt = $db->prepare("DELETE FROM produit WHERE id = :id");
+    $stmt->execute(["id" => $id]);
+}

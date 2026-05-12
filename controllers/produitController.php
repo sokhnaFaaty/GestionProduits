@@ -2,8 +2,7 @@
 
 require_once(ROOT . "models/produitModel.php");
 
-// Pages disponibles dans ce controller
-$pages = ["ajoutProduit", "enregistrerProduit"];
+$pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourProduit", "listeProduit", "supprimerProduit"];
 
 function ajoutProduit(){
     $errors  = [];
@@ -33,3 +32,10 @@ function enregistrerProduit(){
 }
 
 
+
+function supprimerProduit(){
+    $id = $_GET['id'] ?? null;
+    deleteProduit($id);
+    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+    exit;
+}
