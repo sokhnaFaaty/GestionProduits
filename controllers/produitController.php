@@ -1,4 +1,5 @@
 <?php
+
 require_once(ROOT . "models/produitModel.php");
 
 // Pages disponibles dans ce controller
@@ -30,3 +31,5 @@ function enregistrerProduit(){
 
     require_once(ROOT . "views/ajoutProduit.php");
 }
+
+
