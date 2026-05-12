@@ -1,39 +1,66 @@
 <?php
-
 require_once(ROOT . "models/produitModel.php");
 
-$pages = ["ajoutProduit", "enregistrerProduit"];
+$pages = ["ajoutProduit", "listeProduit", "modifierProduit", "supprimerProduit"];
 
 function ajoutProduit(){
-    $errors  = [];
-    require_once(ROOT . "views/ajoutProduit.php"); // même vue
-}
+    $errors = [];
+    $save   = [];
 
-function mettreAJourProduit(){
-    $id       = $_POST['id'];
-    $libelle  = trim($_POST['libelle']  ?? '');
-    $prix     = $_POST['prix']          ?? '';
-    $quantite = $_POST['quantite']      ?? '';
-    $errors   = [];
+    if(isset($_REQUEST["envoie"])){
+        $save     = $_POST;
+        $libelle  = $_REQUEST["libelle"];
+        $prix     = $_REQUEST["prix"];
+        $quantite = $_REQUEST["quantite"];
 
-    if($libelle  === '') $errors[] = "Le libellé est obligatoire.";
-    if($prix     === '') $errors[] = "Le prix est obligatoire.";
-    if($quantite === '') $errors[] = "La quantité est obligatoire.";
+        if(empty($libelle))  $errors["libelleVide"]  = "Veuillez remplir le libellé";
+        if(empty($prix))     $errors["prixVide"]     = "Veuillez remplir le prix";
+        if(empty($quantite)) $errors["quantiteVide"] = "Veuillez remplir la quantité";
 
-    if(empty($errors)){
-        updateProduit($id, $libelle, (float)$prix, (int)$quantite);
-        header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
-        exit;
+        if(empty($errors)){
+            addProduit($libelle,$prix,$quantite);
+            header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+            exit();
+        }
     }
 
-    $produit = getProduitById($id);
-    require_once(ROOT . "views/ajoutProduit.php"); 
+    require_once(ROOT . "views/produits/ajoutProduit.php");
 }
-
-
-$pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourProduit", "listeProduit"];
 
 function listeProduit(){
     $produits = getAllProduits();
-    require_once(ROOT . "views/listeProduit.php");
+    require_once(ROOT . "views/produits/listeProduit.php");
+}
+
+function modifierProduit(){
+    $errors = [];
+    $save   = [];
+    $id     = $_REQUEST["id"];
+
+    if(isset($_REQUEST["envoie"])){
+        $save     = $_POST;
+        $libelle  = $_REQUEST["libelle"];
+        $prix     = $_REQUEST["prix"];
+        $quantite = $_REQUEST["quantite"];
+
+        if(empty($libelle))  $errors["libelleVide"]  = "Veuillez remplir le libellé";
+        if(empty($prix))     $errors["prixVide"]     = "Veuillez remplir le prix";
+        if(empty($quantite)) $errors["quantiteVide"] = "Veuillez remplir la quantité";
+
+        if(empty($errors)){
+            updateProduit($id, $libelle, $prix, $quantite);
+            header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+            exit();
+        }
+    }
+
+    $produit = getProduitById($id);
+    require_once(ROOT . "views/produits/ajoutProduit.php");
+}
+
+function supprimerProduit(){
+    $id = $_REQUEST["id"];
+    deleteProduit($id);
+    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+    exit();
 }
