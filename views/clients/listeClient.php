@@ -62,9 +62,8 @@
                             ✏️ Modifier
                         </a>
                         <!-- Supprimer -->
-                        <a href=""
+                        <a href="<?= WEBROOT ?>?controller=clients&page=suppClient&id=<?=$client["id"] ?>"
                             name = "supprimer"
-                            
                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs  font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition">
                             🗑️ Supprimer
                         </a>
