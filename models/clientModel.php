@@ -29,3 +29,10 @@ function updateClient(int $id, array $data) {
     $stmt->execute([$data['nom'], $data['prenom'], $data['telephone'], $data['email'], $id]);
     return $stmt->rowCount();
 }
+
+function deleteClient(int $id) {
+    $db = getDb();
+    $stmt = $db->prepare("DELETE FROM client WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->rowCount();
+}

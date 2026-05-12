@@ -2,7 +2,7 @@
 require_once(ROOT."models/clientModel.php");
 
 
-$pages =["ajoutClient", "listeClient","modifClient"];
+$pages =["ajoutClient", "listeClient","modifClient","suppClient"];
 
 function ajoutClient(){
      $errors = [];
@@ -96,4 +96,13 @@ function modifClient(){
         }
         require_once(ROOT."views/clients/modifierClient.php");
     }
+}
+
+function suppClient(){
+    if(isset($_GET["id"])){
+        deleteClient($_GET["id"]);
+        header("location:".WEBROOT."?controller=clients&page=listeClient");
+        exit();
+    }
+
 }
