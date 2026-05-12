@@ -57,7 +57,7 @@
                 <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                         <!-- Modifier -->
-                        <a href=""
+                        <a href="<?= WEBROOT ?>?controller=clients&page=modifClient&id=<?=$client["id"] ?>"
                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition">
                             ✏️ Modifier
                         </a>

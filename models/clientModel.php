@@ -13,3 +13,19 @@ function getAllClients() {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function getClientById(int $id) {
+   $db = getDb();
+    $stmt = $db->prepare("SELECT * FROM client WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+
+function updateClient(int $id, array $data) {
+    $db = getDb();
+    $stmt = $db->prepare("UPDATE client SET nom = ?, prenom = ?, telephone = ?, email = ? WHERE id = ?");
+    $stmt->execute([$data['nom'], $data['prenom'], $data['telephone'], $data['email'], $id]);
+    return $stmt->rowCount();
+}
