@@ -33,3 +33,9 @@ function enregistrerProduit(){
 }
 
 
+$pages = ["ajoutProduit", "enregistrerProduit", "modifierProduit", "mettreAJourProduit", "listeProduit"];
+
+function listeProduit(){
+    $produits = getAllProduits();
+    require_once(ROOT . "views/listeProduit.php");
+}
