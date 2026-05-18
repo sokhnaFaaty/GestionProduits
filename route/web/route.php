@@ -5,8 +5,8 @@ function router(){
     return [
         "clients" => ROOT."controllers/clientController.php",
         "produits"=>ROOT."controllers/produitController.php",
-        "commandes"=>ROOT."controllers/commandeController.php",
-        "ligneCommandes"=>ROOT."controllers/ligneCommandeController.php"
+        "ligneCommandes"=>ROOT."controllers/ligneCommandeController.php",
+        "commandes"=>ROOT."controllers/commandeController.php"
     ];
 }
 function gestionControllerPage(){
