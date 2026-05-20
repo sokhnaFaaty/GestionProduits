@@ -11,3 +11,4 @@ require_once(ROOT."db/config.php");
 require_once(ROOT."validation/validate.php");
 
 require_once(ROOT."route/web/route.php");
+gestionControllerPage();

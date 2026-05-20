@@ -11,25 +11,28 @@ $ajoutCommande = function(){
     $errors =[];
     if(isset($_REQUEST["verif"])){
         $save =$_REQUEST;
-        $nom = $_REQUEST["nom"];
-        $prenom = $_REQUEST["prenom"];
+        // $nom = $_REQUEST["nom"];
+        // $prenom = $_REQUEST["prenom"];
         $telephone = $_REQUEST["telephone"];
-        $email = $_REQUEST["email"];
+        // $email = $_REQUEST["email"];
 
         $errors = validDataClient($save);
    
        
         if(empty($errors)){
             $searchClient = [
-                "nom" => $nom ,
-                "prenom" => $prenom,
+                // "nom" => $nom ,
+                // "prenom" => $prenom,
                 "telephone" => $telephone ,
-                "email" => $email,
+                // "email" => $email,
             ];
           $result=  verifClient($searchClient);
           $verif = (!empty($result)) ? $result[0]: null;
           $allProduits = getAllProduits();
           var_dump($verif);
+        // if(isset($_REQUEST["ajouter"])){
+        //     $date = $_REQUEST["date_commande"];
+        // }
     }
     }
     require_once(ROOT."/views/commandes/ajoutCommande.php");

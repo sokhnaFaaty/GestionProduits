@@ -15,10 +15,10 @@ function getAllCommande(){
 
 function verifClient($data) {
     $sql = "SELECT * FROM client
-            WHERE email  = :email
-              AND nom  = :nom
-              AND prenom = :prenom
-              AND telephone = :telephone
+            -- WHERE email  = :email
+            --   AND nom  = :nom
+            --   AND prenom = :prenom
+              WHERE  telephone = :telephone
             LIMIT 1";
     $res = executeSelect($sql,$data,false);
     return $res;
