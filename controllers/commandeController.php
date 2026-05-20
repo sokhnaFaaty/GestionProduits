@@ -1,6 +1,21 @@
 <?php
-require_once(ROOT . "models/commandeModel.php");
 
+session_start();
+
+require_once(ROOT . "models/commandeModel.php");
+require_once(ROOT . "models/produitModel.php");
+
+if (!isset($_SESSION['panier'])) {
+    $_SESSION['panier'] = [];
+}
+
+if (!isset($_SESSION['produit'])) {
+    $_SESSION['produit'] = null;
+}
+
+if (!isset($_SESSION['client'])) {
+    $_SESSION['client'] = null;
+}
 
 $pages=["ajoutCommande","listeCommande","detailCommande"];
 $ajoutCommande = function () {
