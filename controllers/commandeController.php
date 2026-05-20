@@ -7,8 +7,10 @@ $listeCommande = function(){
     require_once(ROOT."views/commandes/listeCommande.php");
 };
 $ajoutCommande = function(){
+    
     $save = [];
     $errors =[];
+
     if(isset($_REQUEST["verif"])){
         $save =$_REQUEST;
         // $nom = $_REQUEST["nom"];
