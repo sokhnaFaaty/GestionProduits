@@ -26,7 +26,7 @@
     </tr>
 </table>
 
-<!-- ── Lignes de produits ─────────────────────────────── -->
+<!-- ── Lignes de produits  -->
 <h2>Produits commandés</h2>
 
 <table border="1" cellpadding="8" cellspacing="0">
