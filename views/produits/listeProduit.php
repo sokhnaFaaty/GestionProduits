@@ -1,4 +1,4 @@
-<?php require_once(ROOT . "views/header.php"); ?>
+
 
 <div class="max-w-5xl mx-auto px-6 py-8">
 

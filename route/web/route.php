@@ -29,7 +29,7 @@ function gestionControllerPage(){
     //     $page();
     // }
 }
-gestionControllerPage();
+// gestionControllerPage();
 
 
 

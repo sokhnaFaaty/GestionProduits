@@ -1,49 +1,25 @@
 <?php
-require_once(ROOT."models/commandeModel.php");
-require_once(ROOT."models/produitModel.php");
+require_once(ROOT."db/config.php");
 
-$listeCommande = function(){
-    $commandes = getAllCommande();
-    require_once(ROOT."views/commandes/listeCommande.php");
-};
-$ajoutCommande = function(){
-    $save = [];
-    $errors =[];
-    if(isset($_REQUEST["verif"])){
-        $save =$_REQUEST;
-        $nom = $_REQUEST["nom"];
-        $prenom = $_REQUEST["prenom"];
-        $telephone = $_REQUEST["telephone"];
-        $email = $_REQUEST["email"];
+// function getAllCommande(){
+//     $sql = "SELECT * FROM commande";
+//    return executeSelect($sql);
+// }
 
-        $errors = validDataClient($save);
-   
-       
-        if(empty($errors)){
-            $searchClient = [
-                "nom" => $nom ,
-                "prenom" => $prenom,
-                "telephone" => $telephone ,
-                "email" => $email,
-            ];
-          $result=  verifClient($searchClient);
-          $verif = (!empty($result)) ? $result[0]: null;
-          $allProduits = getAllProduits();
-          var_dump($verif);
-    }
-    }
-    require_once(ROOT."/views/commandes/ajoutCommande.php");
-};
+function getAllCommande(){
+    $sql = "SELECT c.*, cl.nom as nomClient, cl.prenom as prenomClient
+            FROM commande c 
+            JOIN client cl ON c.id_client = cl.id";
+    return executeSelect($sql);
+}
 
-$pages =[
-    "listeCommande" => $listeCommande,
-    "ajoutCommande" => $ajoutCommande,
-];
-
-$page = $_REQUEST["page"] ?? "listeCommande";
-if(array_key_exists($page,$pages)){
-    return $pages[$page]();
-}else{
-    echo "page introuvable";
-    exit();
+function verifClient($data) {
+    $sql = "SELECT * FROM client
+            -- WHERE email  = :email
+            --   AND nom  = :nom
+            --   AND prenom = :prenom
+              WHERE  telephone = :telephone
+            LIMIT 1";
+    $res = executeSelect($sql,$data,false);
+    return $res;
 }

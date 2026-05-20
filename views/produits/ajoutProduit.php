@@ -18,7 +18,7 @@
     $valLibelle  = $save['libelle']  ?? ($produit['libelle']        ?? '');
     $valPrix     = $save['prix']     ?? ($produit['prix']           ?? '');
     $valQuantite = $save['quantite'] ?? ($produit['quantite_stock'] ?? '');
-    $action      = isset($produit) ? 'modifierProduit&id=' . $produit['id'] : 'ajoutProduit';
+    $action      = isset($produit) ? 'modifierProduit&id=' . $produit['id_produit'] : 'ajoutProduit';
   ?>
 
   <form method="POST" action="<?= WEBROOT ?>?controller=produits&page=<?= $action ?>">
