@@ -5,6 +5,7 @@ function router(){
     return [
         "clients" => ROOT."controllers/clientController.php",
         "produits"=>ROOT."controllers/produitController.php",
+        "commandes" => ROOT."controllers/commandeController.php",
     ];
 }
 function gestionControllerPage(){
@@ -15,16 +16,18 @@ function gestionControllerPage(){
         echo "controleur introuvable";
         return;
     }
+
     require_once($routes[$controller]);
     
+    
+//on appelle plus les pages c'est le controlleur qui gére ça
+    // $page = $_REQUEST["page"] ?? $pages[0];
+    // if(!in_array($page,$pages)){
+    //     echo "page introuvable";
+    // }else {
 
-    $page = $_REQUEST["page"] ?? $pages[0];
-    if(!in_array($page,$pages)){
-        echo "page introuvable";
-    }else {
-
-        $page();
-    }
+    //     $page();
+    // }
 }
 gestionControllerPage();
 

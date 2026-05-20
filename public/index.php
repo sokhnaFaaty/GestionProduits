@@ -8,4 +8,6 @@ define("ROOT", (str_replace("public","",$_SERVER['DOCUMENT_ROOT'])));
 define("WEBROOT","http://localhost:8003/");
 require_once(ROOT."views/header.php");
 require_once(ROOT."db/config.php");
+require_once(ROOT."validation/validate.php");
+
 require_once(ROOT."route/web/route.php");

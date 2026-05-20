@@ -1,10 +1,9 @@
 <?php
 require_once(ROOT . "models/produitModel.php");
 
-$pages = ["ajoutProduit", "listeProduit", "modifierProduit", "supprimerProduit"];
 
 
-function ajoutProduit(){
+$ajoutProduit = function() {
     $errors = [];
     $save   = [];
 
@@ -26,24 +25,24 @@ function ajoutProduit(){
     }
 
     require_once(ROOT . "views/produits/ajoutProduit.php");
-}
+};
 
 
-function supprimerProduit(){
+$supprimerProduit = function (){
     $id = $_GET['id'] ?? null;
     deleteProduit($id);
     header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
     exit;
-}
+};
 
 
 
-function listeProduit(){
+$listeProduit = function (){
     $produits = getAllProduits();
     require_once(ROOT . "views/produits/listeProduit.php");
-}
+};
 
-function modifierProduit(){
+$modifierProduit= function (){
     $errors = [];
     $save   = [];
     $id     = $_REQUEST["id"];
@@ -67,4 +66,19 @@ function modifierProduit(){
 
     $produit = getProduitById($id);
     require_once(ROOT . "views/produits/ajoutProduit.php");
-}
+};
+
+$pages = [
+    "listeProduit" => $listeProduit ,
+    "ajoutProduit" => $ajoutProduit, 
+    "modifierProduit" => $modifierProduit,
+    "supprimerProduit" => $supprimerProduit
+    ];
+
+    $page = $_REQUEST["page"] ?? "listeProduit";
+    if(array_key_exists($page,$pages)){
+        $pages[$page]();
+    }else {
+        echo "page introuvable";
+        exit();
+    }
