@@ -26,7 +26,7 @@
       </div> --> 
 
       <!-- FORMULAIRE -->
-      <form method="POST" action="<?=WEBROOT?>?controller=clients&page=ajoutClient"> 
+      <form method="POST" action="<?=WEBROOT?>?controller=clients&page=modifClient&id=<?=$client_id?>"> 
       <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <div class="grid grid-cols-2 gap-5">
 
@@ -36,7 +36,8 @@
                       Nom <span class="text-red-500">*</span>
                   </label>
                   <span class="text-red-500"><?=$errors["nomVide"] ??""?></span>
-                  <input name="nom" type="text" placeholder="Diallo"
+                  <input name="nom" type="text" placeholder="Diallo" 
+                    value="<?= $dataClient["nom"] ??"" ?>"
                       class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition placeholder:text-gray-400" />
               </div>
 
@@ -48,6 +49,7 @@
                   <span class="text-red-500"><?= $errors["prenomVide"] ??"" ?></span>
 
                   <input name="prenom" type="text" placeholder="Moussa"
+                     value="<?= $dataClient["prenom"] ??"" ?>"
                       class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition placeholder:text-gray-400" />
               </div>
 
@@ -56,6 +58,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-1.5">Téléphone</label>
                   <span class="text-red-500"><?= $errors["telephoneVide"] ??"" ?></span>
                   <input name="telephone" type="tel" placeholder="+221 77 000 00 00"
+                         value="<?= $dataClient["telephone"] ??"" ?>"
                       class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition placeholder:text-gray-400" />
               </div>
 
@@ -64,6 +67,8 @@
                   <label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
                   <span class="text-red-500"><?= $errors["email"] ??"" ?></span>
                   <input name="email" type="email" placeholder="moussa@email.com"
+                    value="<?= $dataClient["email"] ??"" ?>"
+
                       class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition placeholder:text-gray-400" />
               </div>
 
@@ -85,7 +90,7 @@
                   <button name="envoie"
                         type="submit"
                       class="px-6 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 active:scale-95 transition shadow-sm">
-                      ✓ Enregistrer
+                      ✓ Modifier
                   </button>
               </div>
           </div>
