@@ -1,21 +1,19 @@
 <?php
 require_once(ROOT . "models/produitModel.php");
 
-
-
 $ajoutProduit = function() {
     $errors = [];
     $save   = [];
 
     if(isset($_REQUEST["envoie"])){
         $save     = $_POST;
-        $libelle  = $_REQUEST["libelle"];
-        $prix     = $_REQUEST["prix"];
-        $quantite = $_REQUEST["quantite"];
+         $data = [
+            "libelle"  => trim($_REQUEST["libelle"]),
+            "prix"     => trim($_REQUEST["prix"]),
+            "quantite" => trim($_REQUEST["quantite"])
+        ];
 
-        if(empty($libelle))  $errors["libelleVide"]  = "Veuillez remplir le libellé";
-        if(empty($prix))     $errors["prixVide"]     = "Veuillez remplir le prix";
-        if(empty($quantite)) $errors["quantiteVide"] = "Veuillez remplir la quantité";
+    $errors=validDataProduit($data);
 
         if(empty($errors)){
             addProduit($libelle,$prix,$quantite);
@@ -49,17 +47,17 @@ $listeProduit = function (){
 $modifierProduit= function (){
     $errors = [];
     $save   = [];
-    $id     = $_REQUEST["id"];
+    $id_produit     = $_REQUEST["id"];
 
     if(isset($_REQUEST["envoie"])){
         $save     = $_POST;
-        $libelle  = $_REQUEST["libelle"];
-        $prix     = $_REQUEST["prix"];
-        $quantite = $_REQUEST["quantite"];
+          $data = [
+            "libelle"  => trim($_REQUEST["libelle"]),
+            "prix"     => trim($_REQUEST["prix"]),
+            "quantite" => trim($_REQUEST["quantite"])
+        ];
 
-        if(empty($libelle))  $errors["libelleVide"]  = "Veuillez remplir le libellé";
-        if(empty($prix))     $errors["prixVide"]     = "Veuillez remplir le prix";
-        if(empty($quantite)) $errors["quantiteVide"] = "Veuillez remplir la quantité";
+       $errors=validDataProduit($data);
 
         if(empty($errors)){
             updateProduit($id, $libelle, $prix, $quantite);

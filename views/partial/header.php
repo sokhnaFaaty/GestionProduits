@@ -18,10 +18,26 @@
       </div>
       <span class="font-semibold text-gray-800 text-sm">GestionApp</span>
     </div>
+    <?php
+    $controller = $_REQUEST['controller'] ?? 'clients';
+    $active  = "px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium";
+    $inactive = "px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition";
+  ?>
     <div class="flex gap-1 text-sm">
-      <a href="<?= WEBROOT?>?controller=clients&page=listeClient" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium">👤 Clients</a>
-      <a href="<?= WEBROOT?>?controller=produits&page=listeProduit" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Produits</a>
-      <a href="<?= WEBROOT?>?controller=commandes&page=listeCommande" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Commandes</a>
-
+     
+  <div class="flex gap-1 text-sm">
+    <a href="<?= WEBROOT ?>?controller=clients&page=listeClient"
+       class="<?= $controller === 'clients' ? $active : $inactive ?>">
+      👤 Clients
+    </a>
+    <a href="<?= WEBROOT ?>?controller=produits&page=listeProduit"
+       class="<?= $controller === 'produits' ? $active : $inactive ?>">
+      📦 Produits
+    </a>
+    <a href="<?= WEBROOT ?>?controller=commandes&page=listeCommande"
+       class="<?= $controller === 'commandes' ? $active : $inactive ?>">
+      🧾 Commandes
+    </a>
+  </div>
     </div>
   </nav>

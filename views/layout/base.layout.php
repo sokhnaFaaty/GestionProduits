@@ -19,9 +19,9 @@
       <span class="font-semibold text-gray-800 text-sm">GestionApp</span>
     </div>
     <div class="flex gap-1 text-sm">
-      <a href="<?= path("clients","listeClient")?> class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium">👤 Clients</a>
-      <a href="<?= path("produits","listeProduit") ?> class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Produits</a>
-      <a href="<?= path("commandes","listeCommande") ?>class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Commandes</a>
+      <a href="<?= path("clients","listeClient")?> "class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium">👤 Clients</a>
+      <a href="<?= path("produits","listeProduit") ?>" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Produits</a>
+      <a href="<?= path("commandes","listeCommande") ?> "class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Commandes</a>
 
     </div>
   </nav>
