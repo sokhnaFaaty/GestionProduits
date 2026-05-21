@@ -22,5 +22,9 @@
       <a href="<?= WEBROOT?>?controller=clients&page=listeClient" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium">👤 Clients</a>
       <a href="<?= WEBROOT?>?controller=produits&page=listeProduit" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Produits</a>
       <a href="<?= WEBROOT?>?controller=commandes&page=listeCommande" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition">📦 Commandes</a>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c787a364fd2742b995e60572a95ff50e30a4f637
     </div>
   </nav>

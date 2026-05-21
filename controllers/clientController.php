@@ -2,11 +2,10 @@
 require_once(ROOT."models/clientModel.php");
 
 
-$pages =["ajoutClient", "listeClient","modifClient","suppClient"];
 
-function ajoutClient(){
-     $errors = [];
+$ajoutClient = function (){
      $save = [];
+     $errors = [];
     //  var_dump($_REQUEST);
     if(isset($_REQUEST["envoie"])){
         $save = $_POST;
@@ -14,20 +13,9 @@ function ajoutClient(){
         $prenom = $_REQUEST["prenom"];
         $telephone = $_REQUEST["telephone"];
         $email = $_REQUEST["email"];
-       
+
+        $errors = validDataClient($save);
    
-        if(empty($nom)){
-            $errors["nomVide"] ="Veuillez remplir le nom";
-        }
-        if(empty($prenom)){
-            $errors["prenomVide"] ="Veuillez remplir le prenom";
-        }
-        if(empty($telephone)){
-            $errors["telephoneVide"] ="Veuillez remplir le telephone";
-            }
-        if(empty($email)){
-                $errors["email"] ="Veuillez remplir l'email";
-            }
        
         if(empty($errors)){
             $nbClient = [
@@ -43,14 +31,14 @@ function ajoutClient(){
         
 }
 require_once(ROOT."views/clients/ajoutClient.php");   
-}
+};
 
-function listeClient(){
+$listeClient = function (){
     $clients = getAllClients();
     require_once(ROOT."views/clients/listeClient.php");
-}
+};
 
-function modifClient(){
+$modifClient =function(){
     if(!isset($_GET["id"])){
         header("location:".WEBROOT."?controller=clients&page=listeClient");
         exit();
@@ -67,20 +55,9 @@ function modifClient(){
         $prenom = $_REQUEST["prenom"];
         $telephone = $_REQUEST["telephone"];
         $email = $_REQUEST["email"];
-       
-   
-        if(empty($nom)){
-            $errors["nomVide"] ="Veuillez remplir le nom";
-        }
-        if(empty($prenom)){
-            $errors["prenomVide"] ="Veuillez remplir le prenom";
-        }
-        if(empty($telephone)){
-            $errors["telephoneVide"] ="Veuillez remplir le telephone";
-            }
-        if(empty($email)){
-                $errors["email"] ="Veuillez remplir l'email";
-            }
+        
+        $errors = validDataClient($save);
+    
        
         if(empty($errors)){
             $modifClient = [
@@ -96,13 +73,33 @@ function modifClient(){
         }
         require_once(ROOT."views/clients/modifierClient.php");
     }
-}
+};
 
-function suppClient(){
+$suppClient=function (){
     if(isset($_GET["id"])){
         deleteClient($_GET["id"]);
         header("location:".WEBROOT."?controller=clients&page=listeClient");
         exit();
     }
 
-}
+};
+
+$pages =[
+    "listeClient" => $listeClient,
+    "ajoutClient" => $ajoutClient ,
+    "modifClient" => $modifClient,
+    "suppClient" => $suppClient,
+    ];
+ $page = $_REQUEST["page"] ?? "listeClient" ;
+//appelle l'objet
+//  var_dump($pages[$page]);
+//appelle la fonction
+//  var_dump($pages[$page]());
+
+
+ if(array_key_exists($page,$pages)){
+    $pages[$page]();
+ }else{
+    echo "page introuvable";
+    exit();
+ }
