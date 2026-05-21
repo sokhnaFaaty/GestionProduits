@@ -19,19 +19,22 @@ $ajoutProduit = function() {
 
         if(empty($errors)){
             addProduit($libelle,$prix,$quantite);
-            header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+            header("Location: " .path("produits","listeProduit"));
             exit();
         }
     }
-
-    require_once(ROOT . "views/produits/ajoutProduit.php");
+    loadView("produits/ajoutProduit",[
+        "errors" => $errors,
+        "save" => $save
+    ],"base");
+    // require_once(ROOT . "views/produits/ajoutProduit.php");
 };
 
 
 $supprimerProduit = function (){
     $id = $_GET['id'] ?? null;
     deleteProduit($id);
-    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+    header("Location: " . path("produits","listeProduit"));
     exit;
 };
 
@@ -39,7 +42,8 @@ $supprimerProduit = function (){
 
 $listeProduit = function (){
     $produits = getAllProduits();
-    require_once(ROOT . "views/produits/listeProduit.php");
+    loadView("produits/listeProduit",["produits" => $produits],"side");
+    // require_once(ROOT . "views/produits/listeProduit.php");
 };
 
 $modifierProduit= function (){
@@ -59,13 +63,19 @@ $modifierProduit= function (){
 
         if(empty($errors)){
             updateProduit($id, $libelle, $prix, $quantite);
-            header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+            header("Location: " .path("produits","listeProduit"));
             exit();
         }
     }
 
     $produit = getProduitById($id);
-    require_once(ROOT . "views/produits/ajoutProduit.php");
+    // require_once(ROOT . "views/produits/ajoutProduit.php");
+    loadView("produits/ajoutProduit",[
+           "errors" => $errors ,
+            "save" =>$save ,
+            "id" =>$id ,
+            "produit" => $produit,
+    ],"base");
 };
 
 $pages = [

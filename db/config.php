@@ -33,3 +33,5 @@ function executeUpdate(string $sql,array $data = []){
     $stmt ->execute($data);
 }
 ?>
+
+<!-- faire deconnexion -->

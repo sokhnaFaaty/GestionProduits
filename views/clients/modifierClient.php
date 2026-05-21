@@ -26,7 +26,7 @@
       </div> --> 
 
       <!-- FORMULAIRE -->
-      <form method="POST" action="<?=WEBROOT?>?controller=clients&page=modifClient&id=<?=$client_id?>"> 
+      <form method="POST" action="<?=path("clients","modifClient")?>&id=<?=$client_id?>"> 
       <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <div class="grid grid-cols-2 gap-5">
 

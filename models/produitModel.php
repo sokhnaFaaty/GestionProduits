@@ -16,13 +16,13 @@ function addProduit($libelle,$prix,$quantite){
 
 function deleteProduit($id){
     $db   = getDb();
-    $stmt = $db->prepare("DELETE FROM produit WHERE id = :id");
+    $stmt = $db->prepare("DELETE FROM produit WHERE id_produit = :id");
     $stmt->execute(["id" => $id]);
 }
 function getProduitById($id){
     $db   = getDb();
-    $stmt = $db->prepare("SELECT * FROM produit WHERE id = :id");
-    $stmt->execute(["id" => $id]);
+    $stmt = $db->prepare("SELECT * FROM produit WHERE id_produit = :id");
+    $stmt->execute(["id"=> $id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
@@ -37,13 +37,13 @@ function updateProduit($id, $libelle, $prix, $quantite){
     $stmt = $db->prepare(
         "UPDATE produit 
          SET libelle = :libelle, prix = :prix, quantite_stock = :quantite
-         WHERE id = :id"
+         WHERE id_produit  = :id"
     );
     $stmt->execute([
-        "id"       => $id,
-        "libelle"  => $libelle,
-        "prix"     => $prix,
-        "quantite" => $quantite
+        ":id"=> $id,
+        ":libelle"  => $libelle,
+        ":prix"     => $prix,
+        ":quantite" => $quantite
     ]);
 
 }

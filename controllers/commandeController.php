@@ -4,7 +4,8 @@ require_once(ROOT."models/produitModel.php");
 
 $listeCommande = function(){
     $commandes = getAllCommande();
-    require_once(ROOT."views/commandes/listeCommande.php");
+    loadView("commandes/listeCommande",["commandes" => $commandes],"side");
+    // require_once(ROOT."views/commandes/listeCommande.php");
 };
 $ajoutCommande = function(){
     
@@ -37,7 +38,13 @@ $ajoutCommande = function(){
         // }
     }
     }
-    require_once(ROOT."/views/commandes/ajoutCommande.php");
+    // require_once(ROOT."/views/commandes/ajoutCommande.php");
+    loadView("commandes/ajoutCommande",[
+         "save" => $save ,
+          "errors" =>$errors ,
+          "verif"=> $verif,
+          "allProduits"=>$allProduits,
+    ],"base");
 };
 
 $pages =[

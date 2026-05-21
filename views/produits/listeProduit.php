@@ -1,5 +1,3 @@
-<?php require_once(ROOT . "views/header.php"); ?>
-
 <div class="max-w-5xl mx-auto px-6 py-8">
 
   <div class="flex items-center justify-between mb-6">
@@ -112,4 +110,3 @@
   }
 </script>
 
-<?php require_once(ROOT . "views/footer.php"); ?>

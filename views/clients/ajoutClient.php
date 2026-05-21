@@ -26,7 +26,7 @@
       </div> --> 
 
       <!-- FORMULAIRE -->
-      <form method="POST" action="<?=WEBROOT?>?controller=clients&page=ajoutClient"> 
+      <form method="POST" action="<?= path("clients","ajoutClient ") ?> "> 
       <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <div class="grid grid-cols-2 gap-5">
 
