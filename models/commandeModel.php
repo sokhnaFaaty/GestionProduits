@@ -30,8 +30,7 @@ function saveCommande(int $id_client, array $panier, float $montantTotal) {
     executeUpdate(
         "INSERT INTO commande (id_client, date_commande, statut, montant_total)
          VALUES (:id_client, NOW(), 'en attente', :montant_total)",
-        ['id_client' => $id_client, 'montant_total' => $montantTotal] // ← corrigé '$id' → 'id_client'
-    );
+        ['id_client' => $id_client, 'montant_total' => $montantTotal] );
 
     $db = getDb();
     $id_commande = $db->lastInsertId();
