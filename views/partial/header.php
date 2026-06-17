@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ajouter un Client</title>
+  <title>GestionApp</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -21,9 +21,9 @@
     </div>
     <?php
     $controller = $_REQUEST['controller'] ?? 'clients';
-    $active  = "px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium";
+    $active   = "px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium";
     $inactive = "px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition";
-  ?>
+    ?>
     <div class="flex gap-1 text-sm">
      
   <div class="flex gap-1 text-sm">

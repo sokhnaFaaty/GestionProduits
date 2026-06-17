@@ -18,7 +18,7 @@
       <span class="text-sm font-medium text-gray-700">
         Liste des produits (<?= count($produits) ?>)
       </span>
-      <input oninput="filterTable(this.value)" type="text" placeholder="🔍 Rechercher..."
+      <input oninput="filterTable(this.value)" type="text" placeholder="Rechercher..."
         class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 w-56 transition"/>
     </div>
 
@@ -50,11 +50,11 @@
             <div class="flex gap-2">
               <a href="<?= WEBROOT ?>?controller=produits&page=modifierProduit&id=<?= $p['id_produit'] ?>"
                 class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition">
-                ✏️ Modifier
+                <i class="fa-solid fa-pen-to-square"></i> Modifier
               </a>
               <button onclick="openDel(<?= $p['id_produit'] ?>, '<?= addslashes(htmlspecialchars($p['libelle'])) ?>')"
                 class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition">
-                🗑️ Supprimer
+                <i class="fa-solid fa-trash"></i> Supprimer
               </button>
             </div>
           </td>
@@ -73,7 +73,7 @@
 <div id="modal-del" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
   <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm">
     <div class="flex items-center gap-3 mb-3">
-      <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600 text-lg">🗑️</div>
+      <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600 text-lg"><i class="fa-solid fa-trash"></i></div>
       <h3 class="text-base font-semibold text-gray-800">Confirmer la suppression</h3>
     </div>
     <p class="text-sm text-gray-500 mb-6" id="del-msg"></p>

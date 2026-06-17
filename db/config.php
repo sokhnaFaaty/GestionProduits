@@ -15,7 +15,7 @@ function getDb(): PDO
     if ($db === null) {
         try {
             $dsn = sprintf(
-                'mysql:host=%s;port=%s;dbname=%s;charset=utf8',
+                'pgsql:host=%s;port=%s;dbname=%s',
                 DB_HOST, DB_PORT, DB_NAME
             );
             $db = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
