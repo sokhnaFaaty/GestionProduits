@@ -14,6 +14,10 @@ function loadView(string $view,array $datas = [],string $layout = "base"){
     require_once(ROOT."views/layout/".$layout.".layout.php");
 }
 
-function path (string $controller,string $action){
-    return WEBROOT."?controller=$controller&page=$action";
+function path(string $controller, string $action, array $params = []): string {
+    $url = WEBROOT . $controller . '/' . $action;
+    if ($params) {
+        $url .= '?' . http_build_query($params);
+    }
+    return $url;
 }

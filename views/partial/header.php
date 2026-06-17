@@ -27,15 +27,15 @@
     <div class="flex gap-1 text-sm">
      
   <div class="flex gap-1 text-sm">
-    <a href="<?= WEBROOT ?>?controller=clients&page=listeClient"
+    <a href="<?= path('clients', 'listeClient') ?>"
        class="<?= $controller === 'clients' ? $active : $inactive ?>">
       <i class="fa-solid fa-user mr-1"></i> Clients
     </a>
-    <a href="<?= WEBROOT ?>?controller=produits&page=listeProduit"
+    <a href="<?= path('produits', 'listeProduit') ?>"
        class="<?= $controller === 'produits' ? $active : $inactive ?>">
       <i class="fa-solid fa-box mr-1"></i> Produits
     </a>
-    <a href="<?= WEBROOT ?>?controller=commandes&page=listeCommande"
+    <a href="<?= path('commandes', 'listeCommande') ?>"
        class="<?= $controller === 'commandes' ? $active : $inactive ?>">
       <i class="fa-solid fa-receipt mr-1"></i> Commandes
     </a>

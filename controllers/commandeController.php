@@ -151,7 +151,7 @@ $ajoutCommande = function () {
             $_SESSION['produit'] = null;
             $_SESSION['client']  = null;
 
-            header("Location: " . WEBROOT . "?controller=commandes&page=detailCommande&id=" . $id_commande);
+            header("Location: " . path("commandes", "detailCommande", ["id" => $id_commande]));
             exit();
         }
     }
