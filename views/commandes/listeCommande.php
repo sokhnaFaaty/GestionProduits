@@ -32,7 +32,7 @@
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
         <span class="text-sm font-medium text-gray-700">Liste des clients (<span id="count">0</span>)</span>
-        <input oninput="filterTable(this.value)" type="text" placeholder="🔍 Rechercher..."
+        <input oninput="filterTable(this.value)" type="text" placeholder="Rechercher..."
           class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 w-56 transition"/>
       </div>
       <table class="w-full text-sm">
@@ -64,13 +64,13 @@
                         <!-- Modifier -->
                         <a href=""
                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition">
-                            ✏️ detail
+                            <i class="fa-solid fa-eye"></i> Détail
                         </a>
                         <!-- Supprimer -->
                         <a href=""
                             name = "supprimer"
                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs  font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition">
-                            🗑️ Supprimer
+                            <i class="fa-solid fa-trash"></i> Supprimer
                         </a>
                     </div>
                 </td>

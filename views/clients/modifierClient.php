@@ -90,7 +90,7 @@
                   <button name="envoie"
                         type="submit"
                       class="px-6 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 active:scale-95 transition shadow-sm">
-                      ✓ Modifier
+                      <i class="fa-solid fa-check mr-1"></i> Modifier
                   </button>
               </div>
           </div>

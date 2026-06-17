@@ -64,7 +64,7 @@
           href="<?= path('clients','listeClient') ?>" 
           class="flex items-center gap-3 px-4 py-3 rounded-xl bg-indigo-50 text-indigo-700 font-medium"
         >
-          <span class="text-lg">👤</span>
+          <i class="fa-solid fa-user text-lg"></i>
           <span>Clients</span>
         </a>
 
@@ -73,7 +73,7 @@
           href="<?= path('produits','listeProduit') ?>" 
           class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-100 transition"
         >
-          <span class="text-lg">📦</span>
+          <i class="fa-solid fa-box text-lg"></i>
           <span>Produits</span>
         </a>
 
