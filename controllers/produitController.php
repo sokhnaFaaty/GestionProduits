@@ -1,6 +1,22 @@
 <?php
 require_once(ROOT . "models/produitModel.php");
 
+function handleImageUpload(): ?string {
+    if (empty($_FILES['image']['name'])) return null;
+    if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) return null;
+
+    $allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!in_array($_FILES['image']['type'], $allowed)) return null;
+    if ($_FILES['image']['size'] > 2 * 1024 * 1024) return null;
+
+    $ext  = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+    $name = uniqid('prod_') . '.' . $ext;
+    $dir  = ROOT . 'public/uploads/produits/';
+    if (!is_dir($dir)) mkdir($dir, 0755, true);
+    move_uploaded_file($_FILES['image']['tmp_name'], $dir . $name);
+    return $name;
+}
+
 $ajoutProduit = function() {
     $errors = [];
     $save   = [];
@@ -16,6 +32,7 @@ $ajoutProduit = function() {
         $errors = validDataProduit($data);
 
         if(empty($errors)){
+            $data['image'] = handleImageUpload();
             addProduit($data);
             header("Location: " . path("produits","listeProduit"));
             exit();
@@ -55,6 +72,13 @@ $modifierProduit = function(){
         $errors = validDataProduit($data);
 
         if(empty($errors)){
+            $nouvelleImage = handleImageUpload();
+            if ($nouvelleImage) {
+                $data['image'] = $nouvelleImage;
+            } else {
+                $ancienProduit = getProduitById($id_produit);
+                $data['image'] = $ancienProduit['image'] ?? null;
+            }
             updateProduit($id_produit, $data);
             header("Location: " . path("produits","listeProduit"));
             exit();

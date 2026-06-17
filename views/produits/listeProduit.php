@@ -42,7 +42,19 @@
         ?>
         <tr class="hover:bg-gray-50 transition-colors" data-libelle="<?= strtolower(htmlspecialchars($p['libelle'])) ?>">
           <td class="px-4 py-3 text-gray-400 font-mono text-xs">#<?= $p['id_produit'] ?></td>
-          <td class="px-4 py-3 font-medium text-gray-900"><?= htmlspecialchars($p['libelle']) ?></td>
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-3">
+              <?php if (!empty($p['image'])): ?>
+                <img src="<?= WEBROOT ?>uploads/produits/<?= htmlspecialchars($p['image']) ?>"
+                     alt="" class="w-10 h-10 object-cover rounded-lg border border-gray-200 flex-shrink-0"/>
+              <?php else: ?>
+                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-image text-gray-300"></i>
+                </div>
+              <?php endif; ?>
+              <span class="font-medium text-gray-900"><?= htmlspecialchars($p['libelle']) ?></span>
+            </div>
+          </td>
           <td class="px-4 py-3 text-gray-700 font-medium"><?= number_format($p['prix'], 0, ',', ' ') ?> FCFA</td>
           <td class="px-4 py-3 text-gray-600"><?= $q ?></td>
           <td class="px-4 py-3"><?= $badge ?></td>

@@ -3,7 +3,7 @@ require_once(ROOT . "db/config.php");
 
 function addProduit(array $data): void {
     executeUpdate(
-        "INSERT INTO produit(libelle, prix, quantite_stock) VALUES (:libelle, :prix, :quantite)",
+        "INSERT INTO produit(libelle, prix, quantite_stock, image) VALUES (:libelle, :prix, :quantite, :image)",
         $data
     );
 }
@@ -38,7 +38,7 @@ function getAllProduits(): array {
 function updateProduit(int $id_produit, array $data): void {
     $data["id_produit"] = $id_produit;
     executeUpdate(
-        "UPDATE produit SET libelle = :libelle, prix = :prix, quantite_stock = :quantite WHERE id_produit = :id_produit",
+        "UPDATE produit SET libelle = :libelle, prix = :prix, quantite_stock = :quantite, image = :image WHERE id_produit = :id_produit",
         $data
     );
 }
