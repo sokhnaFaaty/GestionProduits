@@ -16,7 +16,7 @@ $ajoutProduit = function() {
     $errors=validDataProduit($data);
 
         if(empty($errors)){
-            addProduit($libelle,$prix,$quantite);
+            addProduit($data);
             header("Location: " .path("produits","listeProduit"));
             exit();
         }
@@ -30,8 +30,8 @@ $ajoutProduit = function() {
 
 
 $supprimerProduit = function (){
-    $id = $_GET['id'] ?? null;
-    deleteProduit($id);
+    $id = (int)($_GET['id'] ?? 0);
+    if ($id) deleteProduit($id);
     header("Location: " . path("produits","listeProduit"));
     exit;
 };
@@ -60,19 +60,18 @@ $modifierProduit= function (){
        $errors=validDataProduit($data);
 
         if(empty($errors)){
-            updateProduit($id, $libelle, $prix, $quantite);
+            updateProduit($id_produit, $data);
             header("Location: " .path("produits","listeProduit"));
             exit();
         }
     }
 
-    $produit = getProduitById($id);
-    // require_once(ROOT . "views/produits/ajoutProduit.php");
+    $produit = getProduitById($id_produit);
     loadView("produits/ajoutProduit",[
-           "errors" => $errors ,
-            "save" =>$save ,
-            "id" =>$id ,
-            "produit" => $produit,
+           "errors"  => $errors,
+            "save"   => $save,
+            "id"     => $id_produit,
+            "produit"=> $produit,
     ],"base");
 };
 

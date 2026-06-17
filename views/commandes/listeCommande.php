@@ -54,7 +54,7 @@
                 <?php extract($commande) ?>
             <tr class="hover:bg-gray-50 transition">
                 <td class="px-4 py-3 text-gray-800"><?= $id_commande?></td>
-                <td class="px-4 py-3 text-gray-800"><?= $nomClient ." ". $prenomClient?></td>
+                <td class="px-4 py-3 text-gray-800"><?= $nom_client ." ". $prenom_client?></td>
                 <td class="px-4 py-3 text-gray-800"><?= $date_commande ?></td>
                 <td class="px-4 py-3 text-gray-800"><?= $statut ?></td>
                 <td class="px-4 py-3 text-gray-800"><?= $montant_total ?></td>

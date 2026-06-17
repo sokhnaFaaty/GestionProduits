@@ -69,52 +69,58 @@ $ajoutCommande = function () {
         }
     }
 
-    //jouter un produit au panier 
+    //jouter un produit au panier
     elseif ($action === 'ajouterProduit') {
         $id_produit = (int)($_POST['id_produit'] ?? 0);
         $quantite   = (int)($_POST['quantite']   ?? 1);
-        $prix       = (float)($_POST['prix']     ?? 0);
-        $libelle    = $_POST['libelle']           ?? '';
-        $stock      = (int)($_POST['stock']       ?? 0);
 
-        // Calcul du déjà ajouté
-        $dejaAjoute = 0;
-        foreach ($panier as $l) {
-            if ((int)$l['id_produit'] === $id_produit) {
-                $dejaAjoute = $l['quantite'];
-                break;
-            }
-        }
-        $stockRestant = $stock - $dejaAjoute;
+        $produitDb = $id_produit ? getProduitById($id_produit) : null;
 
-        if ($quantite < 1 || $quantite > $stockRestant) {
-            $errors['ajout'] = 'Quantité invalide ou stock insuffisant.';
+        if (!$produitDb) {
+            $errors['ajout'] = 'Produit introuvable.';
         } else {
-            // Mise à jour ou ajout dans le panier
-            $found = false;
-            foreach ($panier as &$ligne) {
-                if ((int)$ligne['id_produit'] === $id_produit) {
-                    $ligne['quantite']   += $quantite;
-                    $ligne['sous_total']  = $ligne['quantite'] * $ligne['prix'];
-                    $found = true;
+            $prix    = (float) $produitDb['prix'];
+            $libelle = $produitDb['libelle'];
+            $stock   = (int)   $produitDb['quantite_stock'];
+
+            // Calcul du déjà ajouté
+            $dejaAjoute = 0;
+            foreach ($panier as $l) {
+                if ((int)$l['id_produit'] === $id_produit) {
+                    $dejaAjoute = $l['quantite'];
                     break;
                 }
             }
-            unset($ligne);
+            $stockRestant = $stock - $dejaAjoute;
 
-            if (!$found) {
-                $panier[] = [
-                    'id_produit' => $id_produit,
-                    'libelle'    => $libelle,
-                    'prix'       => $prix,
-                    'quantite'   => $quantite,
-                    'sous_total' => $prix * $quantite,
-                ];
+            if ($quantite < 1 || $quantite > $stockRestant) {
+                $errors['ajout'] = 'Quantité invalide ou stock insuffisant.';
+            } else {
+                $found = false;
+                foreach ($panier as &$ligne) {
+                    if ((int)$ligne['id_produit'] === $id_produit) {
+                        $ligne['quantite']  += $quantite;
+                        $ligne['sous_total'] = $ligne['quantite'] * $ligne['prix'];
+                        $found = true;
+                        break;
+                    }
+                }
+                unset($ligne);
+
+                if (!$found) {
+                    $panier[] = [
+                        'id_produit' => $id_produit,
+                        'libelle'    => $libelle,
+                        'prix'       => $prix,
+                        'quantite'   => $quantite,
+                        'sous_total' => $prix * $quantite,
+                    ];
+                }
+                $_SESSION['panier'] = $panier;
             }
-            $_SESSION['panier'] = $panier;
         }
 
-        $produitTrouve = $_SESSION['produit'] ?? null; // on garde le produit affiché
+        $produitTrouve = $_SESSION['produit'] ?? null;
     }
 
     //Retirer un produit du panier 
