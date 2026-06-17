@@ -1,23 +1,20 @@
 <?php
 require_once(ROOT."db/config.php");
 
-// function getAllCommande(){
-//     $sql = "SELECT * FROM commande";
-//    return executeSelect($sql);
-// }
-
-function getAllCommande(){
-    $sql = "SELECT c.*, cl.nom as nomClient, cl.prenom as prenomClient
-            FROM commande c 
+function getAllCommande(): array {
+    $sql = "SELECT c.*, cl.nom as nom_client, cl.prenom as prenom_client
+            FROM commande c
             JOIN client cl ON c.id_client = cl.id";
     return executeSelect($sql);
 }
 
 function getCommandeById(int $id): array|false {
     return executeSelect(
-        "SELECT c.*, cl.nom, cl.prenom FROM commande c
+        "SELECT c.*, cl.nom, cl.prenom
+         FROM commande c
          JOIN client cl ON cl.id = c.id_client
-         WHERE c.id_commande = :id LIMIT 1",
+         WHERE c.id_commande = :id
+         LIMIT 1",
         ['id' => $id],
         true
     );
@@ -31,13 +28,18 @@ function verifClient(array $data): array|false {
     );
 }
 
-function addCommande(string $code, string $date, float $montantTotal, int $id_client): int {
-    executeUpdate(
-        "INSERT INTO commande (code, date, montantTotal, id_client)
-         VALUES (:code, :date, :montantTotal, :id_client)",
-        ['code' => $code, 'date' => $date, 'montantTotal' => $montantTotal, 'id_client' => $id_client]
+function addCommande(string $code, string $date_commande, float $montant_total, int $id_client): int {
+    $stmt = getDb()->prepare(
+        "INSERT INTO commande (id_client, date_commande, statut, montant_total)
+         VALUES (:id_client, :date_commande, 'en attente', :montant_total)
+         RETURNING id_commande"
     );
-    return (int) getDb()->lastInsertId();
+    $stmt->execute([
+        'id_client'     => $id_client,
+        'date_commande' => $date_commande,
+        'montant_total' => $montant_total,
+    ]);
+    return (int) $stmt->fetchColumn();
 }
 
 function addLigneCommande(int $id_commande, int $id_produit, int $quantite, float $prix): void {
@@ -46,21 +48,20 @@ function addLigneCommande(int $id_commande, int $id_produit, int $quantite, floa
          VALUES (:id_commande, :id_produit, :quantite, :prix)",
         ['id_commande' => $id_commande, 'id_produit' => $id_produit, 'quantite' => $quantite, 'prix' => $prix]
     );
-    // Décrémentation du stock
     executeUpdate(
         "UPDATE produit SET quantite_stock = quantite_stock - :quantite WHERE id_produit = :id_produit",
         ['quantite' => $quantite, 'id_produit' => $id_produit]
     );
 }
-function saveCommande(int $id_client, array $panier, float $montantTotal) {
-    // Créer la commande
-    executeUpdate(
-        "INSERT INTO commande (id_client, date_commande, statut, montant_total)
-         VALUES (:id_client, NOW(), 'en attente', :montant_total)",
-        ['id_client' => $id_client, 'montant_total' => $montantTotal] );
 
-    $db = getDb();
-    $id_commande = $db->lastInsertId();
+function saveCommande(int $id_client, array $panier, float $montantTotal): void {
+    $stmt = getDb()->prepare(
+        "INSERT INTO commande (id_client, date_commande, statut, montant_total)
+         VALUES (:id_client, NOW(), 'en attente', :montant_total)
+         RETURNING id_commande"
+    );
+    $stmt->execute(['id_client' => $id_client, 'montant_total' => $montantTotal]);
+    $id_commande = (int) $stmt->fetchColumn();
 
     foreach ($panier as $ligne) {
         executeUpdate(
@@ -73,10 +74,8 @@ function saveCommande(int $id_client, array $panier, float $montantTotal) {
                 'prix'        => $ligne['prix'],
             ]
         );
-
         executeUpdate(
-            "UPDATE produit SET quantite_stock = quantite_stock - :quantite
-             WHERE id_produit = :id_produit",
+            "UPDATE produit SET quantite_stock = quantite_stock - :quantite WHERE id_produit = :id_produit",
             ['quantite' => $ligne['quantite'], 'id_produit' => $ligne['id_produit']]
         );
     }

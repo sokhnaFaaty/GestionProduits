@@ -67,3 +67,7 @@ function updateClient(int $id, array $data) {
 function deleteClient(int $id) {
     executeUpdate("DELETE FROM client WHERE id = :id",["id" => $id],true);
 }
+
+function getClientByTelephone(string $telephone): array|false {
+    return executeSelect("SELECT * FROM client WHERE telephone = :telephone LIMIT 1", ['telephone' => $telephone], true);
+}
