@@ -7,14 +7,22 @@ require_once(ROOT."db/config.php");
 // }
 
 function getAllCommande(){
-    $sql = "SELECT c.*, cl.nom as nomClient, cl.prenom as prenomClient
-            FROM commande c 
+    $sql = "SELECT c.*, cl.nom as nom_client, cl.prenom as prenom_client
+            FROM commande c
             JOIN client cl ON c.id_client = cl.id";
     return executeSelect($sql);
 }
 
-function getCommandeById($id){
-    return executeSelect("SELECT * FROM commande WHERE id_commande = :id", ["id" => $id], true); 
+function getCommandeById(int $id): array|false {
+    return executeSelect(
+        "SELECT c.*, cl.nom, cl.prenom
+         FROM commande c
+         JOIN client cl ON cl.id = c.id_client
+         WHERE c.id_commande = :id
+         LIMIT 1",
+        ['id' => $id],
+        true
+    );
 }
 
 
@@ -25,15 +33,14 @@ function verifClient($data) {
     $res = executeSelect($sql,$data,true);
     return $res;
 }
-function saveCommande(int $id_client, array $panier, float $montantTotal) {
-    // Créer la commande
-    executeUpdate(
+function saveCommande(int $id_client, array $panier, float $montantTotal): void {
+    $stmt = getDb()->prepare(
         "INSERT INTO commande (id_client, date_commande, statut, montant_total)
-         VALUES (:id_client, NOW(), 'en attente', :montant_total)",
-        ['id_client' => $id_client, 'montant_total' => $montantTotal] );
-
-    $db = getDb();
-    $id_commande = $db->lastInsertId();
+         VALUES (:id_client, NOW(), 'en attente', :montant_total)
+         RETURNING id_commande"
+    );
+    $stmt->execute(['id_client' => $id_client, 'montant_total' => $montantTotal]);
+    $id_commande = (int) $stmt->fetchColumn();
 
     foreach ($panier as $ligne) {
         executeUpdate(
