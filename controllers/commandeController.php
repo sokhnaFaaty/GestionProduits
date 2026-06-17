@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once ROOT . 'models/commandeModel.php';
 require_once ROOT . 'models/produitModel.php';
 require_once ROOT . 'models/clientModel.php';
@@ -12,16 +10,17 @@ if (!isset($_SESSION['client']))  $_SESSION['client']  = null;
 // ── Liste des commandes 
 $listeCommande = function () {
     $commandes = getAllCommande();
-    require_once ROOT . 'views/commandes/listeCommande.php';
+    loadView('commandes/listeCommande', ['commandes' => $commandes], 'side');
 };
 
 // ── Détail d'une commande ────────────────────────────────────────────────────
 $detailCommande = function () {
     $id = (int)($_GET['id'] ?? 0);
-    if (!$id) { echo "Commande introuvable."; return; }
+    if (!$id) { header('Location: ' . path('commandes', 'listeCommande')); exit(); }
     $commande = getCommandeById($id);
-    if (!$commande) { echo "Commande introuvable."; return; }
-    require_once ROOT . 'views/commandes/detailCommande.php';
+    if (!$commande) { header('Location: ' . path('commandes', 'listeCommande')); exit(); }
+    $lignes = getLignesCommande($id);
+    loadView('commandes/detailCommande', ['commande' => $commande, 'lignes' => $lignes], 'side');
 };
 
 // ── Ajout d'une commande ─────────────────────────────────────────────────────
@@ -162,7 +161,14 @@ $ajoutCommande = function () {
     $panier        = $_SESSION['panier'];
     $montantTotal  = array_sum(array_column($panier, 'sous_total'));
 
-    require_once ROOT . 'views/commandes/ajoutCommande.php';
+    loadView('commandes/ajoutCommande', [
+        'errors'           => $errors,
+        'client'           => $client,
+        'produitTrouve'    => $produitTrouve,
+        'panier'           => $panier,
+        'clientIntrouvable'=> $clientIntrouvable,
+        'montantTotal'     => $montantTotal,
+    ], 'base');
 };
 
 // ── Dispatch ───────────

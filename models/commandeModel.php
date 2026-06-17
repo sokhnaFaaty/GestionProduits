@@ -20,6 +20,17 @@ function getCommandeById(int $id): array|false {
     );
 }
 
+function getLignesCommande(int $id_commande): array {
+    return executeSelect(
+        "SELECT lc.*, p.libelle,
+                (lc.quantite * lc.prix_unitaire) AS sous_total
+         FROM ligne_commande lc
+         JOIN produit p ON p.id_produit = lc.id_produit
+         WHERE lc.id_commande = :id_commande",
+        ['id_commande' => $id_commande]
+    );
+}
+
 function verifClient(array $data): array|false {
     return executeSelect(
         "SELECT * FROM client WHERE telephone = :telephone LIMIT 1",

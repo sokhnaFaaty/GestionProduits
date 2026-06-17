@@ -1,37 +1,32 @@
 <?php
 
-
-function router(){
+function router(): array {
     return [
-        "clients" => ROOT."controllers/clientController.php",
-        "produits"=>ROOT."controllers/produitController.php",
-        "commandes" => ROOT."controllers/commandeController.php",
+        'auth'      => ROOT . 'controllers/authController.php',
+        'clients'   => ROOT . 'controllers/clientController.php',
+        'produits'  => ROOT . 'controllers/produitController.php',
+        'commandes' => ROOT . 'controllers/commandeController.php',
     ];
 }
 
-function gestionControllerPage(){
-    $routes = router();
-    $controller = $_REQUEST["controller"] ?? array_key_first($routes);
+function gestionControllerPage(): void {
+    if (session_status() === PHP_SESSION_NONE) session_start();
 
-    if(!array_key_exists($controller, $routes)){
-        echo "controleur introuvable";
+    // Déconnexion
+    if (($_REQUEST['action'] ?? '') === 'logout') {
+        session_destroy();
+        header('Location: ' . APP_URL);
+        exit();
+    }
+
+    $routes     = router();
+    $controller = $_REQUEST['controller'] ?? array_key_first($routes);
+
+    if (!array_key_exists($controller, $routes)) {
+        http_response_code(404);
+        echo "Contrôleur introuvable.";
         return;
     }
 
-
-    $page = $_REQUEST["page"] ?? "listeCommande";
-
-    if(isset($GLOBALS[$page]) && is_callable($GLOBALS[$page])){
-        $GLOBALS[$page]();
-    } else {
-        echo "page introuvable";
-    }
+    require_once $routes[$controller];
 }
-
-$routes = router();
-$controller = $_REQUEST["controller"] ?? array_key_first($routes);
-if(array_key_exists($controller, $routes)){
-    require_once($routes[$controller]);
-}
-
-gestionControllerPage();

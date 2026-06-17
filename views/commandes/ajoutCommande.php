@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-<?php
-// Ce fichier est appelé par $ajoutCommande dans commandeController.php
-// Variables disponibles : $client, $produitTrouve, $panier, $montantTotal,
-//                         $errors, $clientIntrouvable
-?>
-=======
 
->>>>>>> c787a364fd2742b995e60572a95ff50e30a4f637
+
 <div class="max-w-3xl mx-auto px-4 py-8">
 
   <div class="mb-6">
