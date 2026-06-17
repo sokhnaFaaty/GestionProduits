@@ -44,7 +44,9 @@ require_once(ROOT."db/config.php");
 
 
 function saveClient(array $data){
-    executeUpdate("INSERT INTO client (nom, prenom,telephone,email) VALUES (:nom, :prenom, :telephone, :email)",$data);
+    $db = getDb();
+    $stmt = $db->prepare("INSERT INTO client (nom, prenom,telephone,email) VALUES (:nom, :prenom, :telephone, :email)");
+    $stmt->execute($data);
 }
 
 function getAllClients() {
@@ -55,8 +57,6 @@ function getClientById(int $id) {
    return executeSelect("SELECT * FROM client WHERE id = :id",["id" => $id],true);
 }
 
-
-
 function updateClient(int $id, array $data) {
     // var_dump($data);
     // var_dump($id);
@@ -66,4 +66,8 @@ function updateClient(int $id, array $data) {
 
 function deleteClient(int $id) {
     executeUpdate("DELETE FROM client WHERE id = :id",["id" => $id],true);
+}
+
+function getClientByTelephone(string $telephone): array|false {
+    return executeSelect("SELECT * FROM client WHERE telephone = :telephone LIMIT 1", ['telephone' => $telephone], true);
 }

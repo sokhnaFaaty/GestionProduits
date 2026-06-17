@@ -25,17 +25,20 @@
     $inactive = "px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition";
     ?>
     <div class="flex gap-1 text-sm">
-      <a href="<?= WEBROOT ?>?controller=clients&page=listeClient"
-         class="<?= $controller === 'clients' ? $active : $inactive ?>">
-        <i class="fa-solid fa-user mr-1"></i> Clients
-      </a>
-      <a href="<?= WEBROOT ?>?controller=produits&page=listeProduit"
-         class="<?= $controller === 'produits' ? $active : $inactive ?>">
-        <i class="fa-solid fa-box mr-1"></i> Produits
-      </a>
-      <a href="<?= WEBROOT ?>?controller=commandes&page=listeCommande"
-         class="<?= $controller === 'commandes' ? $active : $inactive ?>">
-        <i class="fa-solid fa-receipt mr-1"></i> Commandes
-      </a>
+     
+  <div class="flex gap-1 text-sm">
+    <a href="<?= WEBROOT ?>?controller=clients&page=listeClient"
+       class="<?= $controller === 'clients' ? $active : $inactive ?>">
+      <i class="fa-solid fa-user mr-1"></i> Clients
+    </a>
+    <a href="<?= WEBROOT ?>?controller=produits&page=listeProduit"
+       class="<?= $controller === 'produits' ? $active : $inactive ?>">
+      <i class="fa-solid fa-box mr-1"></i> Produits
+    </a>
+    <a href="<?= WEBROOT ?>?controller=commandes&page=listeCommande"
+       class="<?= $controller === 'commandes' ? $active : $inactive ?>">
+      <i class="fa-solid fa-receipt mr-1"></i> Commandes
+    </a>
+  </div>
     </div>
   </nav>

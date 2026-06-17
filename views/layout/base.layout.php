@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ajouter un Client</title>
+  <title>GestionApp</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -20,10 +20,9 @@
       <span class="font-semibold text-gray-800 text-sm">GestionApp</span>
     </div>
     <div class="flex gap-1 text-sm">
-      <a href="<?= path("clients","listeClient") ?>" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 font-medium"><i class="fa-solid fa-user"></i> Clients</a>
-      <a href="<?= path("produits","listeProduit") ?>" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition"><i class="fa-solid fa-box"></i> Produits</a>
-      <a href="<?= path("commandes","listeCommande") ?>" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition"><i class="fa-solid fa-file-invoice"></i> Commandes</a>
-
+      <a href="<?= path('clients','listeClient') ?>" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition"><i class="fa-solid fa-user"></i> Clients</a>
+      <a href="<?= path('produits','listeProduit') ?>" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition"><i class="fa-solid fa-box"></i> Produits</a>
+      <a href="<?= path('commandes','listeCommande') ?>" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 transition"><i class="fa-solid fa-file-invoice"></i> Commandes</a>
     </div>
   </nav>
   <?= $content ?>

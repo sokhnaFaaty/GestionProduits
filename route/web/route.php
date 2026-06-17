@@ -3,8 +3,8 @@
 
 function router(){
     return [
-        "clients"   => ROOT."controllers/clientController.php",
-        "produits"  => ROOT."controllers/produitController.php",
+        "clients" => ROOT."controllers/clientController.php",
+        "produits"=>ROOT."controllers/produitController.php",
         "commandes" => ROOT."controllers/commandeController.php",
     ];
 }

@@ -1,114 +1,106 @@
 <?php
-// commandeController.php
-require_once(ROOT . "models/commandeModel.php");
-require_once(ROOT . "models/clientModel.php");
-require_once(ROOT . "models/produitModel.php");
+session_start();
 
+require_once ROOT . 'models/commandeModel.php';
+require_once ROOT . 'models/produitModel.php';
+require_once ROOT . 'models/clientModel.php';
+
+if (!isset($_SESSION['panier']))  $_SESSION['panier']  = [];
+if (!isset($_SESSION['produit'])) $_SESSION['produit'] = null;
+if (!isset($_SESSION['client']))  $_SESSION['client']  = null;
+
+// ── Liste des commandes 
 $listeCommande = function () {
     $commandes = getAllCommande();
-    loadView("commandes/listeCommande",[
-        "commandes" => $commandes
-    ]);
-    // require_once(ROOT . "views/commandes/listeCommande.php");
+    require_once ROOT . 'views/commandes/listeCommande.php';
 };
 
+// ── Détail d'une commande ────────────────────────────────────────────────────
 $detailCommande = function () {
-    $id = $_GET['id'] ?? null;
-    if (!$id) { echo "Commande introuvable"; return; }
+    $id = (int)($_GET['id'] ?? 0);
+    if (!$id) { echo "Commande introuvable."; return; }
     $commande = getCommandeById($id);
-    require_once(ROOT . "views/commandes/detailCommande.php");
+    if (!$commande) { echo "Commande introuvable."; return; }
+    require_once ROOT . 'views/commandes/detailCommande.php';
 };
 
+// ── Ajout d'une commande ─────────────────────────────────────────────────────
 $ajoutCommande = function () {
-    if (session_status() === PHP_SESSION_NONE) session_start();
 
-    $errors         = [];
-    $client         = $_SESSION['client']  ?? null;
-    $produitTrouve  = $_SESSION['produit'] ?? null;
-    $panier         = $_SESSION['panier']  ?? [];
+    $errors            = [];
     $clientIntrouvable = false;
-    $montantTotal   = array_sum(array_column($panier, 'sous_total'));
+    $action            = $_POST['action'] ?? '';
 
-    $action = $_POST['action'] ?? null;
-
-    // Rechercher un client ───────
+    // 1. RECHERCHER UN CLIENT
     if ($action === 'rechercherClient') {
-        $telephone = trim($_POST['telephone'] ?? '');
-
-        if ($telephone === '') {
-            $errors['telephone'] = 'Veuillez saisir un numéro de téléphone.';
+        $tel = trim($_POST['telephone'] ?? '');
+        if (empty($tel)) {
+            $errors['telephone'] = "Veuillez saisir un numéro de téléphone.";
         } else {
-            $result = verifClient(['telephone' => $telephone]);
-            if ($result) {
-                $_SESSION['client'] = $result; 
-                $client = $_SESSION['client'];
+            $found = getClientByTelephone($tel);
+            if ($found) {
+                $_SESSION['client'] = $found;
             } else {
-                $clientIntrouvable = true;
                 $_SESSION['client'] = null;
-                $client = null;
+                $clientIntrouvable  = true;
             }
         }
     }
 
-    // rercher un produit
-    elseif ($action === 'rechercherProduit') {
+    // 2. RECHERCHER UN PRODUIT
+    if ($action === 'rechercherProduit') {
         $libelle = trim($_POST['libelle_produit'] ?? '');
-
-        if ($libelle === '') {
-            $errors['libelle_produit'] = 'Veuillez saisir un libellé.';
+        if (empty($libelle)) {
+            $errors['libelle_produit'] = "Veuillez saisir un libellé.";
         } else {
-            $produit = getProduitByLibelle($libelle);
-            if ($produit) {
-                $_SESSION['produit'] = $produit;
-                $produitTrouve = $produit;
+            $found = getProduitByLibelle($libelle);
+            if ($found) {
+                $_SESSION['produit'] = $found;
             } else {
-                $errors['produit'] = 'Aucun produit trouvé avec ce libellé.';
                 $_SESSION['produit'] = null;
-                $produitTrouve = null;
+                $errors['produit']   = "Produit introuvable.";
             }
         }
     }
 
-    //jouter un produit au panier
-    elseif ($action === 'ajouterProduit') {
+    // 3. AJOUTER UN PRODUIT AU PANIER
+    if ($action === 'ajouterProduit') {
         $id_produit = (int)($_POST['id_produit'] ?? 0);
         $quantite   = (int)($_POST['quantite']   ?? 1);
 
-        $produitDb = $id_produit ? getProduitById($id_produit) : null;
-
-        if (!$produitDb) {
-            $errors['ajout'] = 'Produit introuvable.';
+        // Recharge depuis la BDD — prix/libelle/stock ne peuvent pas être falsifiés via les champs hidden
+        $produit = getProduitById($id_produit);
+        if (!$produit) {
+            $errors['ajout'] = "Produit introuvable.";
         } else {
-            $prix    = (float) $produitDb['prix'];
-            $libelle = $produitDb['libelle'];
-            $stock   = (int)   $produitDb['quantite_stock'];
+            $prix    = (float)$produit['prix'];
+            $libelle = $produit['libelle'];
+            $stock   = (int)$produit['quantite_stock'];
 
-            // Calcul du déjà ajouté
             $dejaAjoute = 0;
-            foreach ($panier as $l) {
+            foreach ($_SESSION['panier'] as $l) {
                 if ((int)$l['id_produit'] === $id_produit) {
                     $dejaAjoute = $l['quantite'];
                     break;
                 }
             }
-            $stockRestant = $stock - $dejaAjoute;
 
-            if ($quantite < 1 || $quantite > $stockRestant) {
-                $errors['ajout'] = 'Quantité invalide ou stock insuffisant.';
+            if ($quantite < 1 || ($dejaAjoute + $quantite) > $stock) {
+                $errors['ajout'] = "Quantité invalide ou stock insuffisant.";
             } else {
-                $found = false;
-                foreach ($panier as &$ligne) {
+                $trouve = false;
+                foreach ($_SESSION['panier'] as &$ligne) {
                     if ((int)$ligne['id_produit'] === $id_produit) {
                         $ligne['quantite']  += $quantite;
                         $ligne['sous_total'] = $ligne['quantite'] * $ligne['prix'];
-                        $found = true;
+                        $trouve = true;
                         break;
                     }
                 }
                 unset($ligne);
 
-                if (!$found) {
-                    $panier[] = [
+                if (!$trouve) {
+                    $_SESSION['panier'][] = [
                         'id_produit' => $id_produit,
                         'libelle'    => $libelle,
                         'prix'       => $prix,
@@ -116,65 +108,75 @@ $ajoutCommande = function () {
                         'sous_total' => $prix * $quantite,
                     ];
                 }
-                $_SESSION['panier'] = $panier;
             }
         }
-
-        $produitTrouve = $_SESSION['produit'] ?? null;
     }
 
-    //Retirer un produit du panier 
-    elseif ($action === 'retirerProduit') {
+    // 4. RETIRER UN PRODUIT DU PANIER
+    if ($action === 'retirerProduit') {
         $id_retirer = (int)($_POST['id_retirer'] ?? 0);
-        $panier = array_values(array_filter($panier, fn($l) => (int)$l['id_produit'] !== $id_retirer));
-        $_SESSION['panier'] = $panier;
+        $_SESSION['panier'] = array_values(
+            array_filter(
+                $_SESSION['panier'],
+                fn($l) => (int)$l['id_produit'] !== $id_retirer
+            )
+        );
     }
 
-    //  Valider la commande
-    elseif ($action === 'validerCommande') {
-        if (!$client) {
-            $errors['client'] = 'Veuillez sélectionner un client.';
+    // 5. VALIDER LA COMMANDE
+    if ($action === 'validerCommande') {
+        if (!$_SESSION['client']) {
+            $errors['client'] = "Aucun client sélectionné.";
         }
-        if (empty($panier)) {
-            $errors['panier'] = 'Le panier est vide.';
+        if (empty($_SESSION['panier'])) {
+            $errors['panier'] = "Le panier est vide.";
         }
 
         if (empty($errors)) {
-            // Enregistrement en base
-            saveCommande($client['id'], $panier, $montantTotal);
+            $montantTotal = array_sum(array_column($_SESSION['panier'], 'sous_total'));
+            $code         = 'CMD-' . strtoupper(substr(uniqid(), -6));
+            $date         = date('Y-m-d');
 
-            // Nettoyage session
-            unset($_SESSION['client'], $_SESSION['panier'], $_SESSION['produit']);
+            $id_commande = addCommande($code, $date, $montantTotal, (int)$_SESSION['client']['id']);
 
-            // Redirection vers la liste
-            header("Location: " . WEBROOT . "?controller=commandes&page=listeCommande");
-            exit;
+            foreach ($_SESSION['panier'] as $ligne) {
+                addLigneCommande(
+                    $id_commande,
+                    (int)$ligne['id_produit'],
+                    (int)$ligne['quantite'],
+                    (float)$ligne['prix']
+                );
+            }
+
+            $_SESSION['panier']  = [];
+            $_SESSION['produit'] = null;
+            $_SESSION['client']  = null;
+
+            header("Location: " . WEBROOT . "?controller=commandes&page=detailCommande&id=" . $id_commande);
+            exit();
         }
     }
 
-    // Recalcul du total après modification du panier
-    $montantTotal = array_sum(array_column($panier, 'sous_total'));
-    loadView("commandes/ajoutCommande",[
-        "errors" =>$errors,        
-        "client" =>$client,       
-        "produitTrouve" =>$produitTrouve , 
-        "panier" =>$panier,
-        "clientIntrouvable" => $clientIntrouvable,   
-        "montantTotal" =>$montantTotal  
-        
-    ],"base");
-    // require_once(ROOT . "views/commandes/ajoutCommande.php");
+    $client        = $_SESSION['client'];
+    $produitTrouve = $_SESSION['produit'];
+    $panier        = $_SESSION['panier'];
+    $montantTotal  = array_sum(array_column($panier, 'sous_total'));
+
+    require_once ROOT . 'views/commandes/ajoutCommande.php';
 };
 
+// ── Dispatch ───────────
 $pages = [
-    "listeCommande" => $listeCommande ,
-    "ajoutCommande" => $ajoutCommande, 
-    ];
+    'listeCommande'  => $listeCommande,
+    'ajoutCommande'  => $ajoutCommande,
+    'detailCommande' => $detailCommande,
+];
 
-    $page = $_REQUEST["page"] ?? "listeCommande";
-    if(array_key_exists($page,$pages)){
-        $pages[$page]();
-    }else {
-        echo "page introuvable";
-        exit();
-    }
+$page = $_REQUEST['page'] ?? 'listeCommande';
+
+if (array_key_exists($page, $pages)) {
+    $pages[$page]();
+} else {
+    echo "Page introuvable.";
+    exit();
+}

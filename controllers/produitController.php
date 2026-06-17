@@ -6,86 +6,81 @@ $ajoutProduit = function() {
     $save   = [];
 
     if(isset($_REQUEST["envoie"])){
-        $save     = $_POST;
-         $data = [
+        $save = $_POST;
+        $data = [
             "libelle"  => trim($_REQUEST["libelle"]),
             "prix"     => trim($_REQUEST["prix"]),
             "quantite" => trim($_REQUEST["quantite"])
         ];
 
-    $errors=validDataProduit($data);
+        $errors = validDataProduit($data);
 
         if(empty($errors)){
             addProduit($data);
-            header("Location: " .path("produits","listeProduit"));
+            header("Location: " . path("produits","listeProduit"));
             exit();
         }
     }
     loadView("produits/ajoutProduit",[
         "errors" => $errors,
-        "save" => $save
+        "save"   => $save
     ],"base");
-    // require_once(ROOT . "views/produits/ajoutProduit.php");
 };
 
-
-$supprimerProduit = function (){
+$supprimerProduit = function(){
     $id = (int)($_GET['id'] ?? 0);
     if ($id) deleteProduit($id);
     header("Location: " . path("produits","listeProduit"));
     exit;
 };
 
-
-
-$listeProduit = function (){
+$listeProduit = function(){
     $produits = getAllProduits();
     loadView("produits/listeProduit",["produits" => $produits],"side");
-    // require_once(ROOT . "views/produits/listeProduit.php");
 };
 
-$modifierProduit= function (){
-    $errors = [];
-    $save   = [];
-    $id_produit     = $_REQUEST["id"];
+$modifierProduit = function(){
+    $errors     = [];
+    $save       = [];
+    $id_produit = (int)($_REQUEST["id"] ?? 0);
 
     if(isset($_REQUEST["envoie"])){
-        $save     = $_POST;
-          $data = [
+        $save = $_POST;
+        $data = [
             "libelle"  => trim($_REQUEST["libelle"]),
             "prix"     => trim($_REQUEST["prix"]),
             "quantite" => trim($_REQUEST["quantite"])
         ];
 
-       $errors=validDataProduit($data);
+        $errors = validDataProduit($data);
 
         if(empty($errors)){
             updateProduit($id_produit, $data);
-            header("Location: " .path("produits","listeProduit"));
+            header("Location: " . path("produits","listeProduit"));
             exit();
         }
     }
 
     $produit = getProduitById($id_produit);
     loadView("produits/ajoutProduit",[
-           "errors"  => $errors,
-            "save"   => $save,
-            "id"     => $id_produit,
-            "produit"=> $produit,
+        "errors"  => $errors,
+        "save"    => $save,
+        "id"      => $id_produit,
+        "produit" => $produit,
     ],"base");
 };
 
 $pages = [
-    "listeProduit" => $listeProduit ,
-    "ajoutProduit" => $ajoutProduit, 
+    "listeProduit"    => $listeProduit,
+    "ajoutProduit"    => $ajoutProduit,
     "modifierProduit" => $modifierProduit,
-    "supprimerProduit" => $supprimerProduit
-    ];
+    "supprimerProduit"=> $supprimerProduit
+];
 
-    $page = $_REQUEST["page"] ?? "listeProduit";
-    if(array_key_exists($page,$pages)){
-        $pages[$page]();
-    }else {
-        echo "page introuvable";
-        exit();
-    }
+$page = $_REQUEST["page"] ?? "listeProduit";
+if(array_key_exists($page, $pages)){
+    $pages[$page]();
+} else {
+    echo "page introuvable";
+    exit();
+}
