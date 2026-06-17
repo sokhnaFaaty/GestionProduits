@@ -5,32 +5,33 @@ function router(){
     return [
         "clients" => ROOT."controllers/clientController.php",
         "produits"=>ROOT."controllers/produitController.php",
-        "ligneCommandes"=>ROOT."controllers/ligneCommandeController.php",
-        "commandes"=>ROOT."controllers/commandeController.php"
+        "commandes" => ROOT."controllers/commandeController.php",
     ];
 }
+
 function gestionControllerPage(){
     $routes = router();
     $controller = $_REQUEST["controller"] ?? array_key_first($routes);
 
-    if(!array_key_exists($controller ,$routes)){
+    if(!array_key_exists($controller, $routes)){
         echo "controleur introuvable";
         return;
     }
 
-    require_once($routes[$controller]);
-    
-    
-//on appelle plus les pages c'est le controlleur qui gére ça
-    // $page = $_REQUEST["page"] ?? $pages[0];
-    // if(!in_array($page,$pages)){
-    //     echo "page introuvable";
-    // }else {
 
-    //     $page();
-    // }
+    $page = $_REQUEST["page"] ?? "listeCommande";
+
+    if(isset($GLOBALS[$page]) && is_callable($GLOBALS[$page])){
+        $GLOBALS[$page]();
+    } else {
+        echo "page introuvable";
+    }
 }
-// gestionControllerPage();
 
+$routes = router();
+$controller = $_REQUEST["controller"] ?? array_key_first($routes);
+if(array_key_exists($controller, $routes)){
+    require_once($routes[$controller]);
+}
 
-
+gestionControllerPage();

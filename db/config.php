@@ -1,35 +1,49 @@
 <?php
-function getDb() : PDO {
-    $host = '127.0.0.1';
-    $dbname = 'ProduitGestiongroupeFaty';
-    $user = 'root';
-    $password = '';
 
+// Charge l'environnement : dev en local, prod sur AlwaysData
+if (file_exists(ROOT . 'env.dev.php')) {
+    require_once ROOT . 'env.dev.php';
+} elseif (file_exists(ROOT . 'env.prod.php')) {
+    require_once ROOT . 'env.prod.php';
+} else {
+    die('Fichier de configuration introuvable. Copiez env.example.php en env.dev.php ou env.prod.php.');
+}
+
+function getDb(): PDO
+{
     static $db = null;
-    if($db == null){
+    if ($db === null) {
         try {
-            $db = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8", $user, $password);
+            $dsn = sprintf(
+                'mysql:host=%s;port=%s;dbname=%s;charset=utf8',
+                DB_HOST, DB_PORT, DB_NAME
+            );
+            $db = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // echo "connexion réussi";
-        
         } catch (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
+            // Ne jamais exposer les détails de connexion
+            error_log('DB connection error: ' . $e->getMessage());
+            die('Erreur de connexion à la base de données.');
         }
-        }
+    }
     return $db;
-    
 }
 
-function executeSelect(string $sql,array $data = [], $one = false){
-    $db = getDb();
-    $stmt = $db ->prepare($sql);
-    $stmt ->execute(count($data) === 0 ? [] : $data );
-    return $one ? $stmt->fetch() : $stmt -> fetchAll(); 
+function executeSelect(string $sql, array $data = [], bool $one = false)
+{
+    $stmt = getDb()->prepare($sql);
+    $stmt->execute($data);
+    return $one ? $stmt->fetch(PDO::FETCH_ASSOC) : $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function executeUpdate(string $sql,array $data = []){
-    $db = getDb();
-    $stmt = $db ->prepare($sql);
-    $stmt ->execute($data);
+function executeUpdate(string $sql, array $data = []): void
+{
+    $stmt = getDb()->prepare($sql);
+    $stmt->execute($data);
 }
-?>
+
+function executeInsert(string $sql, array $data = []): int
+{
+    executeUpdate($sql, $data);
+    return (int) getDb()->lastInsertId();
+}

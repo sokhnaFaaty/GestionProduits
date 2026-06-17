@@ -16,24 +16,23 @@ $ajoutProduit = function() {
     $errors=validDataProduit($data);
 
         if(empty($errors)){
-            addProduit(
-                $data["libelle"],        
-                $data["prix"],    
-                $data["quantite"]
-                );   
-            header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+            addProduit($libelle,$prix,$quantite);
+            header("Location: " .path("produits","listeProduit"));
             exit();
         }
     }
-
-    require_once(ROOT . "views/produits/ajoutProduit.php");
+    loadView("produits/ajoutProduit",[
+        "errors" => $errors,
+        "save" => $save
+    ],"base");
+    // require_once(ROOT . "views/produits/ajoutProduit.php");
 };
 
 
 $supprimerProduit = function (){
-    $id_produit = $_GET['id'] ?? null;
-    deleteProduit($id_produit);
-    header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+    $id = $_GET['id'] ?? null;
+    deleteProduit($id);
+    header("Location: " . path("produits","listeProduit"));
     exit;
 };
 
@@ -41,7 +40,8 @@ $supprimerProduit = function (){
 
 $listeProduit = function (){
     $produits = getAllProduits();
-    require_once(ROOT . "views/produits/listeProduit.php");
+    loadView("produits/listeProduit",["produits" => $produits],"side");
+    // require_once(ROOT . "views/produits/listeProduit.php");
 };
 
 $modifierProduit= function (){
@@ -60,20 +60,20 @@ $modifierProduit= function (){
        $errors=validDataProduit($data);
 
         if(empty($errors)){
-            updateProduit(
-                $id_produit,
-                $data["libelle"],
-                $data["prix"],
-                $data["quantite"]
-
-            );
-            header("Location: " . WEBROOT . "?controller=produits&page=listeProduit");
+            updateProduit($id, $libelle, $prix, $quantite);
+            header("Location: " .path("produits","listeProduit"));
             exit();
         }
     }
 
-    $produit = getProduitById($id_produit);
-    require_once(ROOT . "views/produits/ajoutProduit.php");
+    $produit = getProduitById($id);
+    // require_once(ROOT . "views/produits/ajoutProduit.php");
+    loadView("produits/ajoutProduit",[
+           "errors" => $errors ,
+            "save" =>$save ,
+            "id" =>$id ,
+            "produit" => $produit,
+    ],"base");
 };
 
 $pages = [

@@ -240,8 +240,8 @@
       <div class="flex justify-end items-center gap-4 mt-4">
         <?php if (!$client || empty($panier)): ?>
           <p class="text-xs text-gray-400">
-            <?= !$client       ? '⚠ Sélectionnez un client. '       : '' ?>
-            <?= empty($panier) ? '⚠ Ajoutez au moins un produit.' : '' ?>
+            <?= !$client       ? '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Sélectionnez un client.'       : '' ?>
+            <?= empty($panier) ? '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Ajoutez au moins un produit.' : '' ?>
           </p>
         <?php endif; ?>
         <form method="POST" action="<?= WEBROOT ?>?controller=commandes&page=ajoutCommande">

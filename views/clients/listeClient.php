@@ -6,7 +6,7 @@
         <h1 class="text-2xl font-semibold text-gray-900">Clients</h1>
         <p class="text-sm text-gray-500 mt-0.5">Gérez votre base de clients</p>
       </div>
-      <a href="<?= WEBROOT ?>?controller=clients&page=ajoutClient"
+      <a href="<?= path("clients","ajoutClient")?>"
         class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 active:scale-95 transition shadow-sm">
         + Nouveau client
       </a>

@@ -112,4 +112,3 @@
   }
 </script>
 
-<?php require_once(ROOT . "views/footer.php"); ?>

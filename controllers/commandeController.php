@@ -9,7 +9,7 @@ if (!isset($_SESSION['panier']))  $_SESSION['panier']  = [];
 if (!isset($_SESSION['produit'])) $_SESSION['produit'] = null;
 if (!isset($_SESSION['client']))  $_SESSION['client']  = null;
 
-// ── Liste des commandes ──────────────────────────────────────────────────────
+// ── Liste des commandes 
 $listeCommande = function () {
     $commandes = getAllCommande();
     require_once ROOT . 'views/commandes/listeCommande.php';
@@ -165,7 +165,7 @@ $ajoutCommande = function () {
     require_once ROOT . 'views/commandes/ajoutCommande.php';
 };
 
-// ── Dispatch ─────────────────────────────────────────────────────────────────
+// ── Dispatch ───────────
 $pages = [
     'listeCommande'  => $listeCommande,
     'ajoutCommande'  => $ajoutCommande,

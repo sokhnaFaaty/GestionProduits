@@ -25,22 +25,26 @@ $ajoutClient = function (){
                 "telephone" => $telephone 
             ];
         saveClient($nbClient);
-        header("location:".WEBROOT."?controller=clients&page=listeClient");
+        header("location:".path("clients","listeClient"));
         exit();
         }
         
 }
-require_once(ROOT."views/clients/ajoutClient.php");   
+loadView("clients/ajoutClient",[
+    "save" => $save,
+    "errors" => $errors,
+],"base");
 };
 
 $listeClient = function (){
     $clients = getAllClients();
-    require_once(ROOT."views/clients/listeClient.php");
+    loadView("clients/listeClient",["clients" => $clients],"side");
+    // require_once(ROOT."views/clients/listeClient.php");
 };
 
 $modifClient =function(){
     if(!isset($_GET["id"])){
-        header("location:".WEBROOT."?controller=clients&page=listeClient");
+        header("location:".path("clients","listeClient"));
         exit();
     }
     if(isset($_GET["id"])){
@@ -67,18 +71,24 @@ $modifClient =function(){
                 "telephone" => $telephone 
             ];
         updateClient($client_id, $modifClient);
-        header("location:".WEBROOT."?controller=clients&page=listeClient");
+        header("location:". path("clients","listeClient"));
         exit();
         }
         }
-        require_once(ROOT."views/clients/modifierClient.php");
+        // require_once(ROOT."views/clients/modifierClient.php");
+        loadView("clients/modifierClient",[
+                "errors" => $errors,
+                "save" => $save,
+                "client_id" => $client_id,
+                "dataClient"=>$dataClient
+         ],"base");
     }
 };
 
 $suppClient=function (){
     if(isset($_GET["id"])){
         deleteClient($_GET["id"]);
-        header("location:".WEBROOT."?controller=clients&page=listeClient");
+        header("location:".path("clients","listeClient"));
         exit();
     }
 
