@@ -6,10 +6,17 @@
       <h1 class="text-2xl font-semibold text-gray-900">Détail de la commande #<?= $commande['id_commande'] ?></h1>
       <p class="text-sm text-gray-500 mt-0.5"><?= date('d/m/Y H:i', strtotime($commande['date_commande'])) ?></p>
     </div>
-    <a href="<?= path('commandes','listeCommande') ?>"
-       class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
-      <i class="fa-solid fa-arrow-left"></i> Retour
-    </a>
+    <div class="flex gap-3">
+      <a href="<?= WEBROOT ?>?controller=commandes&page=factureCommande&id=<?= $commande['id_commande'] ?>"
+         target="_blank"
+         class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition shadow-sm">
+        <i class="fa-solid fa-print"></i> Facture PDF
+      </a>
+      <a href="<?= path('commandes','listeCommande') ?>"
+         class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+        <i class="fa-solid fa-arrow-left"></i> Retour
+      </a>
+    </div>
   </div>
 
   <div class="grid grid-cols-2 gap-4 mb-6">

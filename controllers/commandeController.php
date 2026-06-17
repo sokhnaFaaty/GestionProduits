@@ -171,11 +171,21 @@ $ajoutCommande = function () {
     ], 'base');
 };
 
+$factureCommande = function () {
+    $id = (int)($_GET['id'] ?? 0);
+    if (!$id) { header('Location: ' . path('commandes', 'listeCommande')); exit(); }
+    $commande = getCommandeById($id);
+    if (!$commande) { header('Location: ' . path('commandes', 'listeCommande')); exit(); }
+    $lignes = getLignesCommande($id);
+    loadView('commandes/facture', ['commande' => $commande, 'lignes' => $lignes], 'facture');
+};
+
 // ── Dispatch ───────────
 $pages = [
     'listeCommande'  => $listeCommande,
     'ajoutCommande'  => $ajoutCommande,
     'detailCommande' => $detailCommande,
+    'factureCommande'=> $factureCommande,
 ];
 
 $page = $_REQUEST['page'] ?? 'listeCommande';
