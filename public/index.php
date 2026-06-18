@@ -1,5 +1,5 @@
 <?php
-define('ROOT', str_replace('public', '', $_SERVER['DOCUMENT_ROOT']));
+define('ROOT', dirname(__DIR__) . '/');
 
 require_once ROOT . 'db/config.php';      // charge env.dev.php ou env.prod.php → définit APP_URL
 define('WEBROOT', APP_URL);

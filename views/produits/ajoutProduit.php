@@ -18,11 +18,11 @@
     $valLibelle  = $save['libelle']  ?? ($produit['libelle']        ?? '');
     $valPrix     = $save['prix']     ?? ($produit['prix']           ?? '');
     $valQuantite = $save['quantite'] ?? ($produit['quantite_stock'] ?? '');
-    $action      = isset($produit) ? 'modifierProduit&id=' . $produit['id_produit'] : 'ajoutProduit';
+    $actionUrl     = isset($produit) ? path('produits', 'modifierProduit', ['id' => $produit['id_produit']]) : path('produits', 'ajoutProduit');
     $imageActuelle = $produit['image'] ?? null;
   ?>
 
-  <form method="POST" action="<?= WEBROOT ?>?controller=produits&page=<?= $action ?>" enctype="multipart/form-data">
+  <form method="POST" action="<?= $actionUrl ?>" enctype="multipart/form-data">
   <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
     <div class="grid grid-cols-2 gap-5">
 
@@ -96,7 +96,7 @@
     <p class="text-xs text-gray-400 mt-4"><span class="text-red-500">*</span> Champs obligatoires</p>
 
     <div class="flex items-center justify-between mt-8 pt-5 border-t border-gray-100">
-      <a href="<?= WEBROOT ?>?controller=produits&page=listeProduit"
+      <a href="<?= path('produits', 'listeProduit') ?>"
         class="inline-flex items-center gap-2 px-4 py-2.5 text-sm text-gray-600 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
         ← Retour à la liste
       </a>

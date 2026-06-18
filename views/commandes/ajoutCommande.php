@@ -28,7 +28,7 @@ J
     </div>
     <div class="px-5 py-4">
 
-      <form method="POST" action="<?= WEBROOT ?>?controller=commandes&page=ajoutCommande">
+      <form method="POST" action="<?= path('commandes', 'ajoutCommande') ?>">
         <input type="hidden" name="action" value="rechercherClient">
         <div class="flex gap-3 items-end">
           <div class="flex-1">
@@ -83,7 +83,7 @@ J
     </div>
     <div class="px-5 py-4">
 
-      <form method="POST" action="<?= WEBROOT ?>?controller=commandes&page=ajoutCommande">
+      <form method="POST" action="<?= path('commandes', 'ajoutCommande') ?>">
         <input type="hidden" name="action" value="rechercherProduit">
         <div class="flex gap-3 items-end">
           <div class="flex-1">
@@ -117,7 +117,7 @@ J
           }
           $stockRestant = $produitTrouve['quantite_stock'] - $dejaAjoute;
         ?>
-        <form method="POST" action="<?= WEBROOT ?>?controller=commandes&page=ajoutCommande">
+        <form method="POST" action="<?= path('commandes', 'ajoutCommande') ?>">
           <input type="hidden" name="action"     value="ajouterProduit">
           <input type="hidden" name="id_produit" value="<?= $produitTrouve['id_produit'] ?>">
           <input type="hidden" name="prix"       value="<?= $produitTrouve['prix'] ?>">
@@ -208,7 +208,7 @@ J
                 <td class="py-3 text-center font-medium text-gray-900"><?= $ligne['quantite'] ?></td>
                 <td class="py-3 text-right font-semibold text-gray-900"><?= number_format($ligne['sous_total'], 0, ',', ' ') ?> FCFA</td>
                 <td class="py-3 text-center">
-                  <form method="POST" action="<?= WEBROOT ?>?controller=commandes&page=ajoutCommande">
+                  <form method="POST" action="<?= path('commandes', 'ajoutCommande') ?>">
                     <input type="hidden" name="action"     value="retirerProduit">
                     <input type="hidden" name="id_retirer" value="<?= $ligne['id_produit'] ?>">
                     <button type="submit"
@@ -237,7 +237,7 @@ J
             <?= empty($panier) ? '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Ajoutez au moins un produit.' : '' ?>
           </p>
         <?php endif; ?>
-        <form method="POST" action="<?= WEBROOT ?>?controller=commandes&page=ajoutCommande">
+        <form method="POST" action="<?= path('commandes', 'ajoutCommande') ?>">
           <input type="hidden" name="action" value="validerCommande">
           <button type="submit"
                   <?= (empty($panier) || !$client) ? 'disabled' : '' ?>

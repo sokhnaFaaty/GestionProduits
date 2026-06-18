@@ -7,7 +7,7 @@
       <h1 class="text-2xl font-semibold text-gray-900">Produits</h1>
       <p class="text-sm text-gray-500 mt-0.5">Gérez votre catalogue de produits</p>
     </div>
-    <a href="<?= WEBROOT ?>?controller=produits&page=ajoutProduit"
+    <a href="<?= path('produits', 'ajoutProduit') ?>"
       class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition shadow-sm">
       + Nouveau produit
     </a>
@@ -60,7 +60,7 @@
           <td class="px-4 py-3"><?= $badge ?></td>
           <td class="px-4 py-3">
             <div class="flex gap-2">
-              <a href="<?= WEBROOT ?>?controller=produits&page=modifierProduit&id=<?= $p['id_produit'] ?>"
+              <a href="<?= path('produits', 'modifierProduit', ['id' => $p['id_produit']]) ?>"
                 class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition">
                 <i class="fa-solid fa-pen-to-square"></i> Modifier
               </a>
@@ -115,7 +115,7 @@
 
   function openDel(id, name) {
     document.getElementById('del-msg').textContent = `Supprimer "${name}" ? Cette action est irréversible.`;
-    document.getElementById('del-link').href = `<?= WEBROOT ?>?controller=produits&page=supprimerProduit&id=${id}`;
+    document.getElementById('del-link').href = `<?= WEBROOT ?>produits/supprimerProduit?id=${id}`;
     document.getElementById('modal-del').classList.remove('hidden');
   }
 

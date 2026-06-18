@@ -57,12 +57,12 @@
                 <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
                         <!-- Modifier -->
-                        <a href="<?= WEBROOT ?>?controller=clients&page=modifClient&id=<?=$client["id"] ?>"
+                        <a href="<?= path('clients', 'modifClient', ['id' => $client['id']]) ?>"
                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition">
                             <i class="fa-solid fa-pen-to-square"></i> Modifier
                         </a>
                         <!-- Supprimer -->
-                        <a href="<?= WEBROOT ?>?controller=clients&page=suppClient&id=<?=$client["id"] ?>"
+                        <a href="<?= path('clients', 'suppClient', ['id' => $client['id']]) ?>"
                             name = "supprimer"
                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs  font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition">
                             <i class="fa-solid fa-trash"></i> Supprimer

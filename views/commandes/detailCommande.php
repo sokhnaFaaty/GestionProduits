@@ -7,7 +7,7 @@
       <p class="text-sm text-gray-500 mt-0.5"><?= date('d/m/Y H:i', strtotime($commande['date_commande'])) ?></p>
     </div>
     <div class="flex gap-3">
-      <a href="<?= WEBROOT ?>?controller=commandes&page=factureCommande&id=<?= $commande['id_commande'] ?>"
+      <a href="<?= path('commandes', 'factureCommande', ['id' => $commande['id_commande']]) ?>"
          target="_blank"
          class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition shadow-sm">
         <i class="fa-solid fa-print"></i> Facture PDF
