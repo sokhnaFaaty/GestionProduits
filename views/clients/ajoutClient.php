@@ -2,7 +2,7 @@
 
       <!-- BREADCRUMB -->
       <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-          <a href="liste_clients.html" class="hover:text-indigo-600 transition">Clients</a>
+          <a href="<?= path('clients', 'listeClient') ?>" class="hover:text-indigo-600 transition">Clients</a>
           <span>/</span>
           <span class="text-gray-800 font-medium">Ajouter</span>
       </div>
@@ -16,7 +16,7 @@
       <!-- ALERTE SUCCÈS
       <div id="alert-success" class="hidden mb-6 flex items-center gap-3 px-4 py-3 bg-green-50 border border-green-200 text-green-700 rounded-xl text-sm">
           <span class="text-lg">✅</span>
-          <span>Client ajouté avec succès ! <a href="liste_clients.html" class="underline font-medium">Voir la liste</a></span>
+          <span>Client ajouté avec succès ! <a href="<?= path('clients', 'listeClient') ?>" class="underline font-medium">Voir la liste</a></span>
       </div>
 
       ALERTE ERREUR -->
@@ -26,7 +26,7 @@
       </div> --> 
 
       <!-- FORMULAIRE -->
-      <form method="POST" action="<?= path("clients","ajoutClient ") ?> "> 
+      <form method="POST" action="<?= path('clients', 'ajoutClient') ?>">
       <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <div class="grid grid-cols-2 gap-5">
 
@@ -73,7 +73,7 @@
 
           <!-- ACTIONS -->
           <div class="flex items-center justify-between mt-8 pt-5 border-t border-gray-100">
-              <a href="liste_clients.html"
+              <a href="<?= path('clients', 'listeClient') ?>"
                   class="inline-flex items-center gap-2 px-4 py-2.5 text-sm text-gray-600 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
                   ← Retour à la liste
               </a>
