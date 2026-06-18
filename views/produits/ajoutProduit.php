@@ -15,9 +15,10 @@
   </div>
 
   <?php
-    $valLibelle  = $save['libelle']  ?? ($produit['libelle']        ?? '');
-    $valPrix     = $save['prix']     ?? ($produit['prix']           ?? '');
-    $valQuantite = $save['quantite'] ?? ($produit['quantite_stock'] ?? '');
+    $valReference = $save['reference'] ?? ($produit['reference']      ?? '');
+    $valLibelle   = $save['libelle']   ?? ($produit['libelle']        ?? '');
+    $valPrix      = $save['prix']      ?? ($produit['prix']           ?? '');
+    $valQuantite  = $save['quantite']  ?? ($produit['quantite_stock'] ?? '');
     $actionUrl     = isset($produit) ? path('produits', 'modifierProduit', ['id' => $produit['id_produit']]) : path('produits', 'ajoutProduit');
     $imageActuelle = $produit['image'] ?? null;
   ?>
@@ -26,12 +27,24 @@
   <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
     <div class="grid grid-cols-2 gap-5">
 
+      <!-- Référence -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+          Référence <span class="text-red-500">*</span>
+        </label>
+        <span class="text-red-500"><?= $errors["reference"] ?? "" ?></span>
+        <input name="reference" type="text"
+          value="<?= htmlspecialchars($valReference) ?>"
+          placeholder="Ex: REF-001"
+          class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition placeholder:text-gray-400"/>
+      </div>
+
       <!-- Libellé -->
-      <div class="col-span-2">
+      <div>
         <label class="block text-sm font-medium text-gray-700 mb-1.5">
           Libellé <span class="text-red-500">*</span>
         </label>
-        <span class="text-red-500"><?= $errors["libelleVide"] ?? "" ?></span>
+        <span class="text-red-500"><?= $errors["libelle"] ?? "" ?></span>
         <input name="libelle" type="text"
           value="<?= htmlspecialchars($valLibelle) ?>"
           placeholder="Ex: Ordinateur portable Dell XPS"

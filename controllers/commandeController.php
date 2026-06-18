@@ -46,13 +46,13 @@ $ajoutCommande = function () {
         }
     }
 
-    // 2. RECHERCHER UN PRODUIT PAR RÉFÉRENCE (id_produit)
+    // 2. RECHERCHER UN PRODUIT PAR RÉFÉRENCE
     if ($action === 'rechercherProduit') {
         $ref = trim($_POST['ref_produit'] ?? '');
-        if (empty($ref) || !ctype_digit($ref)) {
-            $errors['produit'] = "Veuillez saisir une référence valide (ex: 1, 2, 3…).";
+        if (empty($ref)) {
+            $errors['produit'] = "Veuillez saisir une référence.";
         } else {
-            $found = getProduitById((int)$ref);
+            $found = getProduitByReference($ref);
             if ($found) {
                 $_SESSION['produit'] = $found;
             } else {

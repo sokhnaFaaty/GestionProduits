@@ -63,8 +63,8 @@
                     <label class="block text-xs font-medium text-gray-700 uppercase mb-1">Référence Produit</label>
                     <div class="flex gap-2">
                         <input type="text" name="ref_produit"
-                            value="<?= htmlspecialchars($produitTrouve['id_produit'] ?? '') ?>"
-                            placeholder="Ex: 1, 2, 3…"
+                            value="<?= htmlspecialchars($produitTrouve['reference'] ?? '') ?>"
+                            placeholder="Ex: REF-001"
                             class="flex-1 px-3 py-2 border <?= !empty($errors['produit']) ? 'border-red-400' : 'border-gray-300' ?> rounded-md text-sm focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                         <button type="submit"
                             class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium text-sm transition">

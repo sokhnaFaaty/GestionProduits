@@ -21,6 +21,10 @@ function validDataProduit(array $data): array {
 
     $errors = [];
 
+    if (empty($data["reference"])) {
+        $errors["reference"] = "Veuillez remplir la référence";
+    }
+
     if (empty($data["libelle"])) {
         $errors["libelle"] = "Veuillez remplir le libellé";
     }

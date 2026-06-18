@@ -25,7 +25,7 @@
     <table class="w-full text-sm">
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">ID</th>
+          <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Référence</th>
           <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Libellé</th>
           <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Prix</th>
           <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Quantité</th>
@@ -41,7 +41,7 @@
           else             $badge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">En stock</span>';
         ?>
         <tr class="hover:bg-gray-50 transition-colors" data-libelle="<?= strtolower(htmlspecialchars($p['libelle'])) ?>">
-          <td class="px-4 py-3 text-gray-400 font-mono text-xs">#<?= $p['id_produit'] ?></td>
+          <td class="px-4 py-3 text-gray-700 font-mono text-xs"><?= htmlspecialchars($p['reference']) ?></td>
           <td class="px-4 py-3">
             <div class="flex items-center gap-3">
               <?php if (!empty($p['image'])): ?>

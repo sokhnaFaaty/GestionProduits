@@ -24,9 +24,10 @@ $ajoutProduit = function() {
     if(isset($_REQUEST["envoie"])){
         $save = $_POST;
         $data = [
-            "libelle"  => trim($_REQUEST["libelle"]),
-            "prix"     => trim($_REQUEST["prix"]),
-            "quantite" => trim($_REQUEST["quantite"])
+            "reference" => trim($_REQUEST["reference"]),
+            "libelle"   => trim($_REQUEST["libelle"]),
+            "prix"      => trim($_REQUEST["prix"]),
+            "quantite"  => trim($_REQUEST["quantite"])
         ];
 
         $errors = validDataProduit($data);
@@ -64,9 +65,10 @@ $modifierProduit = function(){
     if(isset($_REQUEST["envoie"])){
         $save = $_POST;
         $data = [
-            "libelle"  => trim($_REQUEST["libelle"]),
-            "prix"     => trim($_REQUEST["prix"]),
-            "quantite" => trim($_REQUEST["quantite"])
+            "reference" => trim($_REQUEST["reference"]),
+            "libelle"   => trim($_REQUEST["libelle"]),
+            "prix"      => trim($_REQUEST["prix"]),
+            "quantite"  => trim($_REQUEST["quantite"])
         ];
 
         $errors = validDataProduit($data);

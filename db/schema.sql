@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS client (
 -- Produits
 CREATE TABLE IF NOT EXISTS produit (
     id_produit     SERIAL PRIMARY KEY,
+    reference      VARCHAR(50)  NOT NULL UNIQUE,
     libelle        VARCHAR(200) NOT NULL,
     prix           NUMERIC(10, 2) NOT NULL CHECK (prix >= 0),
     quantite_stock INTEGER NOT NULL DEFAULT 0 CHECK (quantite_stock >= 0),
