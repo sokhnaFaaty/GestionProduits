@@ -46,18 +46,18 @@ $ajoutCommande = function () {
         }
     }
 
-    // 2. RECHERCHER UN PRODUIT
+    // 2. RECHERCHER UN PRODUIT PAR RÉFÉRENCE (id_produit)
     if ($action === 'rechercherProduit') {
-        $libelle = trim($_POST['libelle_produit'] ?? '');
-        if (empty($libelle)) {
-            $errors['libelle_produit'] = "Veuillez saisir un libellé.";
+        $ref = trim($_POST['ref_produit'] ?? '');
+        if (empty($ref) || !ctype_digit($ref)) {
+            $errors['produit'] = "Veuillez saisir une référence valide (ex: 1, 2, 3…).";
         } else {
-            $found = getProduitByLibelle($libelle);
+            $found = getProduitById((int)$ref);
             if ($found) {
                 $_SESSION['produit'] = $found;
             } else {
                 $_SESSION['produit'] = null;
-                $errors['produit']   = "Produit introuvable.";
+                $errors['produit']   = "Aucun produit avec la référence « $ref ».";
             }
         }
     }
