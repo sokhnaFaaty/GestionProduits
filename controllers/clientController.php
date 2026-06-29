@@ -13,6 +13,7 @@ $ajoutClient = function (){
         $prenom = $_REQUEST["prenom"];
         $telephone = $_REQUEST["telephone"];
         $email = $_REQUEST["email"];
+        $password = $_REQUEST["password"]; 
 
         $errors = validDataClient($save);
    
@@ -22,7 +23,8 @@ $ajoutClient = function (){
                 "nom" => $nom ,
                 "prenom" => $prenom,
                 "email" => $email,
-                "telephone" => $telephone 
+                "telephone" => $telephone ,
+                "password" => $password
             ];
         saveClient($nbClient);
         header("location:".path("clients","listeClient"));

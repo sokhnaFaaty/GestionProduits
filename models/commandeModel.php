@@ -91,3 +91,10 @@ function saveCommande(int $id_client, array $panier, float $montantTotal): void 
         );
     }
 }
+
+function getCommandesByClient(int $id_client): array {
+    return executeSelect(
+        "SELECT * FROM commande WHERE id_client = :id_client ORDER BY date_commande DESC",
+        ['id_client' => $id_client]
+    );
+}

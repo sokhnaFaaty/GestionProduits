@@ -1,23 +1,30 @@
 <?php
 
-function validDataClient(array $data):array{
-     $errors = [];
-        if(empty($data["nom"])){
-            $errors["nomVide"] ="Veuillez remplir le nom";
-        }
-        if(empty($data["prenom"])){
-            $errors["prenomVide"] ="Veuillez remplir le prenom";
-        }
-        if(empty($data["telephone"])){
-            $errors["telephoneVide"] ="Veuillez remplir le telephone";
-            }
-        if(empty($data["email"])){
-                $errors["email"] ="Veuillez remplir l'email";
-            }
-        return $errors;
+function validDataClient(array $data): array
+{
+    $errors = [];
+    if (empty($data["nom"])) {
+        $errors["nomVide"] = "Veuillez remplir le nom";
+    }
+    if (empty($data["prenom"])) {
+        $errors["prenomVide"] = "Veuillez remplir le prenom";
+    }
+    if (empty($data["telephone"])) {
+        $errors["telephoneVide"] = "Veuillez remplir le telephone";
+    }
+    if (empty($data["email"])) {
+        $errors["email"] = "Veuillez remplir l'email";
+    }
+    if (empty($data["password"])) {
+        $errors["password"] = "Veuillez saisir un mot de passe";
+    } elseif (strlen($data["password"]) < 6) {
+        $errors["password"] = "Le mot de passe doit contenir au moins 6 caractères";
+    }
+    return $errors;
 }
 
-function validDataProduit(array $data): array {
+function validDataProduit(array $data): array
+{
 
     $errors = [];
 
