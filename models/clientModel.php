@@ -45,19 +45,28 @@ require_once(ROOT."db/config.php");
 
 function saveClient(array $data){
     $db = getDb();
-    $stmt = $db->prepare("INSERT INTO client (nom, prenom,telephone,email) VALUES (:nom, :prenom, :telephone, :email)");
-    $stmt->execute($data);
+    $stmt = $db->prepare("INSERT INTO client (nom, prenom, telephone, email, password) VALUES (:nom, :prenom, :telephone, :email, :password)");
+    $stmt->execute([
+        'nom'       => $data['nom'],
+        'prenom'    => $data['prenom'],
+        'telephone' => $data['telephone'],
+        'email'     => $data['email'],
+        'password'  => password_hash($data['password'], PASSWORD_DEFAULT),
+    ]);
 }
-
 function getAllClients() {
    return executeSelect("SELECT * FROM client");
 }
 
-function getClientById(int $id) {
+function getClientById(int $id):array | false {
    return executeSelect("SELECT * FROM client WHERE id = :id",["id" => $id],true);
 }
+function getClientByEmail(String $email) {
+   return executeSelect("SELECT * FROM client WHERE email = :email",["email" => $email],true);
+}
 
-function updateClient(int $id, array $data) {
+
+function updateClient(int $i0d, array $data) {
     // var_dump($data);
     // var_dump($id);
     $data["id"] = $id;

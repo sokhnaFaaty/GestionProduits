@@ -21,3 +21,27 @@ function path(string $controller, string $action, array $params = []): string {
     }
     return $url;
 }
+
+function redirectTo(string $controller, string $action, array $params = []): void {
+    $url = WEBROOT . "$controller/$action";
+    if ($params) {
+        $url .= '?' . http_build_query($params);
+    }
+    header('Location:' . $url);
+    exit();
+}
+
+function isConnected(): bool {
+    return isset($_SESSION["user"]);
+}
+
+function auth(): void {
+    if (!isConnected()) {
+        redirectTo("auth", "login");
+    }
+}
+
+function hasRole(string $role): bool {
+    if (!isConnected()) return false;
+    return $_SESSION["user"]["role"] === $role;
+}

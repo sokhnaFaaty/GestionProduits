@@ -38,3 +38,9 @@ CREATE TABLE IF NOT EXISTS ligne_commande (
     quantite     INTEGER NOT NULL CHECK (quantite > 0),
     prix_unitaire NUMERIC(10, 2) NOT NULL CHECK (prix_unitaire >= 0)
 );
+
+
+ALTER TABLE client ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT '';
+
+--Ensuite je retire le DEFAULT '' (c'est juste pour ne pas bloquer les clients existants) 
+ALTER TABLE client ALTER COLUMN password DROP DEFAULT;
