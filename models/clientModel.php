@@ -66,7 +66,7 @@ function getClientByEmail(String $email) {
 }
 
 
-function updateClient(int $i0d, array $data) {
+function updateClient(int $id, array $data) {
     // var_dump($data);
     // var_dump($id);
     $data["id"] = $id;
